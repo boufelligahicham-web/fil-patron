@@ -58,11 +58,13 @@ proxy.ts              middleware Next (session Supabase)
 
 ## Déploiement Vercel
 
-1. Le projet Vercel doit être relié à **ce dépôt GitHub** (`boufelligahicham-web/fil-patron`),
-   branche `main`, framework détecté : Next.js.
-2. Commande de build : `npm run build` (aucune commande d'installation spécifique, npm est
+Site en production : **https://fil-patron.vercel.app**
+
+Le projet Vercel est relié à **ce dépôt GitHub** (`boufelligahicham-web/fil-patron`),
+branche `main`, framework détecté : Next.js. Chaque `git push` sur `main` déclenche un
+déploiement automatique.
+
+1. Commande de build : `npm run build` (aucune commande d'installation spécifique, npm est
    détecté via `package-lock.json`).
-3. Ajouter les variables `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   si les comptes doivent être actifs.
-4. Si le projet Vercel est encore relié au dépôt géré par v0, le reconnecter :
-   **Settings → Git → Connect Git Repository**, puis redéployer.
+2. Ajouter les variables `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   si les comptes doivent être actifs (le site fonctionne sans, en mode invité).
