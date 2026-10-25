@@ -28,6 +28,8 @@ export function dateLocale(locale: Locale) {
   return locale === 'ar' ? 'ar-MA' : 'fr-FR'
 }
 
+export type PatternSlug = 'abaya' | 'jilbeb' | 'sarouel' | 'qamis'
+
 const fr = {
   localeName: 'Français',
   meta: {
@@ -302,6 +304,13 @@ const fr = {
       formula: 'Formule',
       value: 'Valeur',
     },
+    diagram: {
+      grain: 'Droit-fil',
+      fold: 'Bord au pli',
+      point: 'Point de construction',
+      grid: 'Quadrillage : 5 cm · Tracé sans marges de couture',
+      foldLabel: 'PLI',
+    },
   },
   measurements: {
     tourPoitrine: 'Tour de poitrine',
@@ -323,6 +332,12 @@ const fr = {
     Débutant: 'Débutant',
     Intermédiaire: 'Intermédiaire',
   },
+  patterns: {
+    abaya: { name: 'Abaya de base', tagline: 'Robe longue et fluide, coupe droite légèrement évasée' },
+    jilbeb: { name: 'Jilbeb de base', tagline: 'Cape en cercle avec capuche encadrant le visage' },
+    sarouel: { name: 'Sarouel', tagline: 'Pantalon ample à fourche abaissée et gousset en losange' },
+    qamis: { name: 'Qamis', tagline: 'Tunique longue à col officier et patte de boutonnage' },
+  } as Record<PatternSlug, { name: string; tagline: string }>,
 }
 
 export type Dictionary = typeof fr
@@ -593,6 +608,13 @@ const ar: Dictionary = {
       formula: 'الصيغة',
       value: 'القيمة',
     },
+    diagram: {
+      grain: 'اتجاه الخيط',
+      fold: 'حافة الطيّة',
+      point: 'نقطة بناء',
+      grid: 'شبكة: 5 سم · رسم دون هوامش خياطة',
+      foldLabel: 'طيّة',
+    },
   },
   measurements: {
     tourPoitrine: 'محيط الصدر',
@@ -614,10 +636,21 @@ const ar: Dictionary = {
     Débutant: 'مبتدئ',
     Intermédiaire: 'متوسط',
   },
+  patterns: {
+    abaya: { name: 'عباية أساسية', tagline: 'ثوب طويل وانسيابي، بقصّة مستقيمة متّسعة قليلًا' },
+    jilbeb: { name: 'جلباب أساسي', tagline: 'عباءة دائرية بقلنسوة تحيط بالوجه' },
+    sarouel: { name: 'سروال', tagline: 'بنطال واسع بشوكة منخفضة وجُسأة معيّنية' },
+    qamis: { name: 'قميص', tagline: 'قميص طويل بياقة عسكرية وفتحة أزرار' },
+  },
 }
 
 export const DICTIONARIES: Record<Locale, Dictionary> = { fr, ar }
 
 export function getDictionary(locale: Locale): Dictionary {
   return DICTIONARIES[locale] ?? DICTIONARIES[DEFAULT_LOCALE]
+}
+
+/** Nom et accroche traduits d'un patron (repli sur l'abaya si slug inconnu). */
+export function patternText(t: Dictionary, slug: string) {
+  return t.patterns[slug as PatternSlug] ?? t.patterns.abaya
 }

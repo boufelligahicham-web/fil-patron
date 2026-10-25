@@ -13,7 +13,7 @@ import {
   type MeasurementKey,
   type Measurements,
 } from '@/lib/content/measurements'
-import { dateLocale } from '@/lib/i18n'
+import { dateLocale, patternText } from '@/lib/i18n'
 import { PATTERNS } from '@/lib/patterns'
 import { fmt } from '@/lib/patterns/types'
 import { cn } from '@/lib/utils'
@@ -107,7 +107,7 @@ export function MeasurementCalculator({
                     <label htmlFor={id} className="text-sm font-medium">
                       {dictionary.measurements[def.key] ?? def.label}
                     </label>
-                    <div className="relative">
+                    <div className="relative" dir="ltr">
                       <input
                         id={id}
                         name={def.key}
@@ -202,14 +202,14 @@ export function MeasurementCalculator({
                   : 'bg-card hover:bg-muted',
               )}
             >
-              {p.name}
+              {patternText(dictionary, p.slug).name}
             </button>
           ))}
         </div>
         <div aria-live="polite" className="flex flex-col gap-3">
           <ValuesTable
             values={result.values}
-            caption={t.valuesCaption(pattern.name)}
+            caption={t.valuesCaption(patternText(dictionary, pattern.slug).name)}
             headings={dictionary.ui.valuesTable}
           />
           <p className="text-sm text-muted-foreground">{t.fabric(fmt(result.fabricCm / 100))}</p>
@@ -219,7 +219,7 @@ export function MeasurementCalculator({
           href={`/patrons/${pattern.slug}`}
           className="inline-flex h-11 w-fit items-center rounded-lg border bg-card px-4 text-sm font-medium hover:bg-muted"
         >
-          {t.viewPattern(pattern.name)}
+          {t.viewPattern(patternText(dictionary, pattern.slug).name)}
         </Link>
       </section>
     </div>

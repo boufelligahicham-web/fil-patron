@@ -7,7 +7,7 @@ import { StepChecklist } from '@/components/step-checklist'
 import { ValuesTable } from '@/components/values-table'
 import { MEASUREMENT_BY_KEY } from '@/lib/content/measurements'
 import { getUserContext } from '@/lib/data'
-import { getDictionary } from '@/lib/i18n'
+import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import { getPattern, PATTERNS, stepSlug } from '@/lib/patterns'
 import { fmt, valuesToRecord } from '@/lib/patterns/types'
@@ -17,9 +17,11 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params
-  const p = getPattern(slug)
-  return p ? { title: p.name, description: p.description } : {}
+  const [{ slug }, locale] = await Promise.all([params, getLocale()])
+  const pattern = getPattern(slug)
+  if (!pattern) return {}
+  const t = getDictionary(locale)
+  return { title: patternText(t, slug).name, description: pattern.description }
 }
 
 export default async function PatternPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -33,6 +35,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
   ])
   const t = getDictionary(locale)
   const p = t.pages.pattern
+  const label = patternText(t, pattern.slug)
 
   const result = pattern.compute(measurements)
   const v = valuesToRecord(result.values)
@@ -62,7 +65,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
           </span>
           <span className="text-sm text-muted-foreground">{pattern.fabrics}</span>
         </div>
-        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{pattern.name}</h1>
+        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{label.name}</h1>
         <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground text-pretty">{pattern.description}</p>
       </header>
 
@@ -89,12 +92,13 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
         </h2>
         <PatternDiagram
           pieces={result.pieces}
-          title={p.schemaTitle(pattern.name)}
+          title={p.schemaTitle(label.name)}
           description={p.schemaDescription(
             result.pieces
               .map((piece) => `${piece.name} (${piece.cut}, ${fmt(piece.bbox.w)} × ${fmt(piece.bbox.h)} cm)`)
               .join(' ; '),
           )}
+          labels={t.ui.diagram}
         />
       </section>
 
@@ -117,7 +121,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
             </h2>
             <ValuesTable
               values={result.values}
-              caption={p.valuesCaption(pattern.name)}
+              caption={p.valuesCaption(label.name)}
               headings={t.ui.valuesTable}
             />
             <p className="text-sm text-muted-foreground">{p.fabric(fmt(result.fabricCm / 100))}</p>
@@ -128,7 +132,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
               {pattern.requiredMeasurements.map((k) => (
                 <div key={k} className="contents">
                   <dt className="text-muted-foreground">{t.measurements[k]}</dt>
-                  <dd className="text-end font-medium tabular-nums">{`${fmt(measurements[k])} cm`}</dd>
+                  <dd className="text-end font-medium tabular-nums" dir="ltr">{`${fmt(measurements[k])} cm`}</dd>
                 </div>
               ))}
             </dl>

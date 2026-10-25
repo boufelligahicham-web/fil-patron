@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { CheckCircle2, Circle } from 'lucide-react'
 import { PageHeader } from '@/components/page-header'
 import { getUserContext } from '@/lib/data'
-import { getDictionary } from '@/lib/i18n'
+import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import { COURSE_LESSONS, PATTERNS, stepSlug } from '@/lib/patterns'
 
@@ -43,7 +43,12 @@ export default async function DashboardPage() {
     COURSE_LESSONS.find((l) => !completed.has(l.slug)) ??
     PATTERNS.map((p) => {
       const i = p.steps.findIndex((_, idx) => !completed.has(stepSlug(p.slug, idx)))
-      return i >= 0 ? { title: `${p.name} — ${p.steps[i].title}`, href: `/patrons/${p.slug}` } : null
+      return i >= 0
+        ? {
+            title: `${patternText(t, p.slug).name} — ${p.steps[i].title}`,
+            href: `/patrons/${p.slug}`,
+          }
+        : null
     }).find(Boolean)
 
   return (
@@ -122,10 +127,10 @@ export default async function DashboardPage() {
                   className="flex h-full flex-col gap-3 rounded-xl border bg-card p-5 hover:border-primary/50"
                 >
                   <span className="flex items-center justify-between">
-                    <span className="text-lg font-semibold">{p.name}</span>
+                    <span className="text-lg font-semibold">{patternText(t, p.slug).name}</span>
                     <span className="text-sm tabular-nums text-muted-foreground">{`${stepCount} / ${p.steps.length}`}</span>
                   </span>
-                  <Bar value={stepCount} max={p.steps.length} label={d.progressLabel(p.name)} />
+                  <Bar value={stepCount} max={p.steps.length} label={d.progressLabel(patternText(t, p.slug).name)} />
                 </Link>
               </li>
             )

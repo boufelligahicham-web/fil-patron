@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Calculator, Ruler, Shirt } from 'lucide-react'
 import { PATTERNS } from '@/lib/patterns'
-import { getDictionary } from '@/lib/i18n'
+import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 
 const MODULES = [
@@ -100,12 +100,12 @@ export default async function HomePage() {
                 className="flex h-full flex-col gap-2 rounded-xl border bg-card p-6 transition-colors hover:border-primary/50"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-xl font-semibold">{p.name}</h3>
+                  <h3 className="text-xl font-semibold">{patternText(t, p.slug).name}</h3>
                   <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
                     {t.levels[p.level]}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground">{p.tagline}</p>
+                <p className="text-sm text-muted-foreground">{patternText(t, p.slug).tagline}</p>
                 <p className="mt-auto pt-2 text-sm font-medium text-primary">
                   {t.home.stepsCount(p.steps.length)}
                 </p>

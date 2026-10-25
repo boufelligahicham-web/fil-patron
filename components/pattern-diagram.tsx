@@ -1,5 +1,15 @@
+﻿'use client'
+
 import { useId } from 'react'
 import { fmt, type PatternPiece } from '@/lib/patterns/types'
+
+type DiagramLabels = {
+  grain: string
+  fold: string
+  point: string
+  grid: string
+  foldLabel: string
+}
 
 const GAP = 10
 const PAD = 8
@@ -8,10 +18,12 @@ export function PatternDiagram({
   pieces,
   title,
   description,
+  labels,
 }: {
   pieces: PatternPiece[]
   title: string
   description: string
+  labels: DiagramLabels
 }) {
   const id = useId()
   const offsets: number[] = []
@@ -96,7 +108,7 @@ export function PatternDiagram({
                     transform={`rotate(90 ${piece.fold[0] + fs * 0.5} ${(piece.fold[1] + piece.fold[3]) / 2})`}
                     textAnchor="middle"
                   >
-                    PLI
+                    {labels.foldLabel}
                   </text>
                 </g>
               )}
@@ -149,17 +161,17 @@ export function PatternDiagram({
       <figcaption className="flex flex-wrap gap-x-5 gap-y-2 border-t px-4 py-3 text-xs text-muted-foreground">
         <span className="flex items-center gap-2">
           <span aria-hidden="true" className="h-0.5 w-6 bg-accent-foreground" />
-          Droit-fil
+          {labels.grain}
         </span>
         <span className="flex items-center gap-2">
           <span aria-hidden="true" className="h-0 w-6 border-t-2 border-dashed border-primary" />
-          Bord au pli
+          {labels.fold}
         </span>
         <span className="flex items-center gap-2">
           <span aria-hidden="true" className="size-2 rounded-full bg-accent-foreground" />
-          Point de construction
+          {labels.point}
         </span>
-        <span>Quadrillage : 5 cm · Tracé sans marges de couture</span>
+        <span>{labels.grid}</span>
       </figcaption>
     </figure>
   )

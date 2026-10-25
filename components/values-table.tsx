@@ -32,8 +32,10 @@ export function ValuesTable({
               <th scope="row" className="px-4 py-2.5 text-start font-medium">
                 {v.label}
               </th>
-              <td className="px-4 py-2.5 font-mono text-xs text-muted-foreground">{v.formula}</td>
-              <td className="px-4 py-2.5 text-end font-semibold tabular-nums">{`${fmt(v.value)} cm`}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-muted-foreground" dir="ltr">
+                {v.formula}
+              </td>
+              <td className="px-4 py-2.5 text-end font-semibold tabular-nums" dir="ltr">{`${fmt(v.value)} cm`}</td>
             </tr>
           ))}
         </tbody>
