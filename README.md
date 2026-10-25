@@ -1,32 +1,68 @@
-# React + TypeScript + Vite
+# Fil & Patron
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Application éducative gratuite de patronnage et de dessin technique : abaya, jilbeb,
+sarouel et qamis. Prise de mesures, glossaire, calculateur, patrons pas à pas et suivi
+de progression.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Next.js 16** (App Router, Turbopack) + **React 19**
+- **Tailwind CSS v4** (thème défini dans `app/globals.css`)
+- **Supabase** (authentification + progression + mesures enregistrées) — optionnel
+- Bilingue **français / arabe** avec RTL, sans dépendance i18n externe
 
-## React Compiler
+## Démarrage
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # build de production
+npm run start    # serveur de production
+npm run typecheck
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Variables d'environnement
+
+Le site est entièrement consultable **sans Supabase** (mode invité : comptes et
+enregistrement désactivés). Pour activer les comptes, copiez `.env.example` en
+`.env.local` et renseignez :
+
+| Variable | Rôle |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | URL du projet Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Clé publique (anon) Supabase |
+
+Créez ensuite les tables et les politiques RLS avec `scripts/001_create_tables.sql`
+(SQL Editor du tableau de bord Supabase).
+
+## Bilingue FR / AR
+
+- Le choix de langue est stocké dans le cookie `lang` (`fr` ou `ar`).
+- `lib/i18n.ts` contient les dictionnaires et les utilitaires (`dirFor`, `getDictionary`).
+- `lib/locale.ts` lit le cookie côté serveur (`getLocale()`).
+- `components/language-switcher.tsx` bascule instantanément `lang`/`dir` sur `<html>`,
+  écrit le cookie puis rafraîchit les composants serveur (`router.refresh()`).
+- Les polices arabes **Cairo** (texte) et **Amiri** (titres) sont chargées via Google Fonts.
+
+## Structure
+
+```
+app/                  routes (App Router)
+components/           UI partagée (header, nav, formulaires, calculateur…)
+lib/i18n.ts           dictionnaires FR / AR
+lib/locale.ts         lecture du cookie de langue
+lib/supabase/         clients Supabase (navigateur, serveur, proxy)
+scripts/              schéma SQL Supabase
+proxy.ts              middleware Next (session Supabase)
+```
+
+## Déploiement Vercel
+
+1. Le projet Vercel doit être relié à **ce dépôt GitHub** (`boufelligahicham-web/fil-patron`),
+   branche `main`, framework détecté : Next.js.
+2. Commande de build : `npm run build` (aucune commande d'installation spécifique, npm est
+   détecté via `package-lock.json`).
+3. Ajouter les variables `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   si les comptes doivent être actifs.
+4. Si le projet Vercel est encore relié au dépôt géré par v0, le reconnecter :
+   **Settings → Git → Connect Git Repository**, puis redéployer.
