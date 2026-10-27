@@ -18,7 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: { default: t.meta.title, template: t.meta.template },
     description: t.meta.description,
-    generator: 'v0.app',
     icons: {
       icon: [
         { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },

@@ -32,11 +32,44 @@ export type PatternSlug = 'abaya' | 'jilbeb' | 'sarouel' | 'qamis'
 
 const fr = {
   localeName: 'Français',
+  brand: 'Fil & Patron',
   meta: {
     title: 'Fil & Patron — Apprendre le patronnage traditionnel',
     template: '%s · Fil & Patron',
     description:
       'Application éducative gratuite de patronnage et de dessin technique : abaya, jilbeb, sarouel et qamis. Prise de mesures, glossaire, calculateur et suivi de progression.',
+    pages: {
+      mesures: {
+        title: 'Guide de prise de mesures',
+        description:
+          'Apprenez à prendre les tours, hauteurs et longueurs, et à choisir les bonnes valeurs d’aisance.',
+      },
+      glossaire: {
+        title: 'Glossaire technique',
+        description:
+          'Glossaire interactif des termes de couture et de patronnage : droit-fil, pinces, marges, fourche, gousset…',
+      },
+      patrons: {
+        title: 'Les patrons de base',
+        description:
+          'Abaya, jilbeb, sarouel et qamis : schémas techniques et étapes de construction détaillées.',
+      },
+      calculateur: {
+        title: 'Calculateur de mensurations',
+        description:
+          'Entrez vos mesures et obtenez instantanément les valeurs de construction de chaque patron.',
+      },
+      dashboard: { title: 'Ma progression' },
+      login: { title: 'Connexion' },
+      signup: { title: 'Inscription' },
+      authError: { title: 'Erreur d’authentification' },
+      signupSuccess: { title: 'Vérifiez votre e-mail' },
+    },
+  },
+  notFound: {
+    title: 'Page introuvable',
+    text: 'Cette page n’existe pas ou a été déplacée.',
+    back: 'Retour à l’accueil',
   },
   a11y: {
     skip: 'Aller au contenu principal',
@@ -311,6 +344,14 @@ const fr = {
       grid: 'Quadrillage : 5 cm · Tracé sans marges de couture',
       foldLabel: 'PLI',
     },
+    actions: {
+      notConfigured:
+        'Le compte en ligne n’est pas encore activé : impossible d’enregistrer pour le moment.',
+      unknownLesson: 'Leçon inconnue.',
+      signInProgress: 'Connectez-vous pour enregistrer votre progression.',
+      signInMeasures: 'Connectez-vous pour enregistrer vos mesures.',
+      saveFailed: 'L’enregistrement a échoué. Réessayez dans un instant.',
+    },
   },
   measurements: {
     tourPoitrine: 'Tour de poitrine',
@@ -344,11 +385,42 @@ export type Dictionary = typeof fr
 
 const ar: Dictionary = {
   localeName: 'العربية',
+  brand: 'فيل وباترون',
   meta: {
-    title: 'Fil & Patron — تعلّم رسم الباترون التقليدي',
-    template: '%s · Fil & Patron',
+    title: 'فيل وباترون — تعلّم رسم الباترون التقليدي',
+    template: '%s · فيل وباترون',
     description:
       'تطبيق تعليمي مجاني لرسم الباترون والرسم التقني: عباية، جلباب، سروال وقميص. أخذ المقاسات، معجم المصطلحات، الحاسبة وتتبّع التقدّم.',
+    pages: {
+      mesures: {
+        title: 'دليل أخذ المقاسات',
+        description:
+          'تعلّموا أخذ المحيطات والارتفاعات والأطوال، واختيار قيم الارتياح المناسبة.',
+      },
+      glossaire: {
+        title: 'معجم المصطلحات',
+        description:
+          'معجم تفاعلي لمصطلحات الخياطة والباترون: اتجاه الخيط، البنّات، الهوامش، الشوكة، الجُسأة…',
+      },
+      patrons: {
+        title: 'الباترونات الأساسية',
+        description: 'عباية، جلباب، سروال وقميص: مخططات تقنية ومراحل بناء مفصّلة.',
+      },
+      calculateur: {
+        title: 'حاسبة المقاسات',
+        description: 'أدخلوا مقاساتكم واحصلوا فورًا على قيم بناء كل باترون.',
+      },
+      dashboard: { title: 'تقدّمي' },
+      login: { title: 'تسجيل الدخول' },
+      signup: { title: 'إنشاء حساب' },
+      authError: { title: 'خطأ في المصادقة' },
+      signupSuccess: { title: 'تحقّقوا من بريدكم الإلكتروني' },
+    },
+  },
+  notFound: {
+    title: 'الصفحة غير موجودة',
+    text: 'هذه الصفحة غير موجودة أو نُقلت.',
+    back: 'العودة إلى الصفحة الرئيسية',
   },
   a11y: {
     skip: 'الانتقال إلى المحتوى الرئيسي',
@@ -363,8 +435,8 @@ const ar: Dictionary = {
     label: 'اللغة',
     fr: 'الفرنسية',
     ar: 'العربية',
-    frShort: 'FR',
-    arShort: 'AR',
+    frShort: 'ف',
+    arShort: 'ع',
   },
   nav: {
     mesures: 'المقاسات',
@@ -377,7 +449,7 @@ const ar: Dictionary = {
     signOut: 'تسجيل الخروج',
   },
   footer: {
-    tagline: 'Fil & Patron — ورشة مجانية للتعلّم على وتيرتك.',
+    tagline: 'فيل وباترون — ورشة مجانية للتعلّم على وتيرتكم.',
     mesures: 'أخذ المقاسات',
     patrons: 'الباترونات',
     calculateur: 'الحاسبة',
@@ -614,6 +686,13 @@ const ar: Dictionary = {
       point: 'نقطة بناء',
       grid: 'شبكة: 5 سم · رسم دون هوامش خياطة',
       foldLabel: 'طيّة',
+    },
+    actions: {
+      notConfigured: 'الحساب عبر الإنترنت غير مفعّل بعد: لا يمكن الحفظ في الوقت الحالي.',
+      unknownLesson: 'درس غير معروف.',
+      signInProgress: 'سجّلوا الدخول لحفظ تقدّمكم.',
+      signInMeasures: 'سجّلوا الدخول لحفظ مقاساتكم.',
+      saveFailed: 'فشل الحفظ. أعيدوا المحاولة بعد لحظة.',
     },
   },
   measurements: {

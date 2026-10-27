@@ -1,13 +1,17 @@
-import { fmt, type ComputedValue } from '@/lib/patterns/types'
+import type { Locale } from '@/lib/i18n'
+import { cmUnit, formatNumber } from '@/lib/patterns/localized'
+import type { ComputedValue } from '@/lib/patterns/types'
 
 export function ValuesTable({
   values,
   caption,
   headings,
+  locale,
 }: {
   values: ComputedValue[]
   caption: string
   headings: { mark: string; formula: string; value: string }
+  locale: Locale
 }) {
   return (
     <div className="overflow-x-auto rounded-xl border bg-card">
@@ -35,7 +39,9 @@ export function ValuesTable({
               <td className="px-4 py-2.5 font-mono text-xs text-muted-foreground" dir="ltr">
                 {v.formula}
               </td>
-              <td className="px-4 py-2.5 text-end font-semibold tabular-nums" dir="ltr">{`${fmt(v.value)} cm`}</td>
+              <td className="px-4 py-2.5 text-end font-semibold tabular-nums" dir="ltr">
+                {`${formatNumber(v.value, locale)} ${cmUnit(locale)}`}
+              </td>
             </tr>
           ))}
         </tbody>

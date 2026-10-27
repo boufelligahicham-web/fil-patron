@@ -6,9 +6,10 @@ import { getUserContext } from '@/lib/data'
 import { getDictionary } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 
-export const metadata: Metadata = {
-  title: 'Glossaire technique',
-  description: 'Glossaire interactif des termes de couture et de patronnage : droit-fil, pinces, marges, fourche, gousset…',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const meta = getDictionary(locale).meta.pages.glossaire
+  return { title: meta.title, description: meta.description }
 }
 
 export default async function GlossairePage() {

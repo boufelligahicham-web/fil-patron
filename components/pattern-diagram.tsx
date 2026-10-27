@@ -1,7 +1,9 @@
 ﻿'use client'
 
 import { useId } from 'react'
-import { fmt, type PatternPiece } from '@/lib/patterns/types'
+import type { Locale } from '@/lib/i18n'
+import { cmUnit, formatNumber, pointLabel } from '@/lib/patterns/localized'
+import type { PatternPiece } from '@/lib/patterns/types'
 
 type DiagramLabels = {
   grain: string
@@ -19,11 +21,13 @@ export function PatternDiagram({
   title,
   description,
   labels,
+  locale,
 }: {
   pieces: PatternPiece[]
   title: string
   description: string
   labels: DiagramLabels
+  locale: Locale
 }) {
   const id = useId()
   const offsets: number[] = []
@@ -142,7 +146,7 @@ export function PatternDiagram({
                     fontWeight={600}
                     fill="var(--foreground)"
                   >
-                    {pt.id}
+                    {pointLabel(locale, pt.id)}
                   </text>
                 </g>
               ))}
@@ -152,7 +156,7 @@ export function PatternDiagram({
                 fontSize={fs * 0.8}
                 fill="var(--muted-foreground)"
               >
-                {`${piece.cut} · ${fmt(piece.bbox.w)} × ${fmt(piece.bbox.h)} cm`}
+                {`${piece.cut} · ${formatNumber(piece.bbox.w, locale)} × ${formatNumber(piece.bbox.h, locale)} ${cmUnit(locale)}`}
               </text>
             </g>
           )

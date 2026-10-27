@@ -8,10 +8,12 @@ import { getUserContext } from '@/lib/data'
 import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import { PATTERNS, stepSlug } from '@/lib/patterns'
+import { patternDescription, patternPieces } from '@/lib/patterns/localized'
 
-export const metadata: Metadata = {
-  title: 'Les patrons de base',
-  description: 'Abaya, jilbeb, sarouel et qamis : schémas techniques et étapes de construction détaillées.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const meta = getDictionary(locale).meta.pages.patrons
+  return { title: meta.title, description: meta.description }
 }
 
 export default async function PatronsPage() {
@@ -27,16 +29,18 @@ export default async function PatronsPage() {
         {PATTERNS.map((p) => {
           const result = p.compute(DEFAULT_MEASUREMENTS)
           const label = patternText(t, p.slug)
+          const pieces = patternPieces(locale, p, result.pieces)
           const done = p.steps.filter((_, i) => completed.has(stepSlug(p.slug, i))).length
           return (
             <li key={p.slug} className="flex flex-col gap-4 rounded-2xl border bg-card p-5">
               <PatternDiagram
-                pieces={result.pieces}
+                pieces={pieces}
                 title={t.pages.patrons.previewTitle(label.name)}
                 description={t.pages.patrons.previewDescription(
-                  result.pieces.map((x) => x.name).join(', '),
+                  pieces.map((x) => x.name).join(locale === 'ar' ? '، ' : ', '),
                 )}
                 labels={t.ui.diagram}
+                locale={locale}
               />
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-2xl font-semibold">{label.name}</h2>
@@ -44,7 +48,7 @@ export default async function PatronsPage() {
                   {t.levels[p.level]}
                 </span>
               </div>
-              <p className="leading-relaxed text-muted-foreground">{p.description}</p>
+              <p className="leading-relaxed text-muted-foreground">{patternDescription(locale, p)}</p>
               <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
                 <p className="text-sm text-muted-foreground">
                   {user

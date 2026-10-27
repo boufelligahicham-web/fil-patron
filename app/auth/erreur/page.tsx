@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { getDictionary } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 
-export const metadata: Metadata = { title: 'Erreur d’authentification' }
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  return { title: getDictionary(locale).meta.pages.authError.title }
+}
 
 export default async function AuthErreurPage() {
   const locale = await getLocale()

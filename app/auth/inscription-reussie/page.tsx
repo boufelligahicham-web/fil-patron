@@ -4,7 +4,10 @@ import { MailCheck } from 'lucide-react'
 import { getDictionary } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 
-export const metadata: Metadata = { title: 'Vérifiez votre e-mail' }
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  return { title: getDictionary(locale).meta.pages.signupSuccess.title }
+}
 
 export default async function InscriptionReussiePage() {
   const locale = await getLocale()

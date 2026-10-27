@@ -5,12 +5,21 @@ import { ArrowLeft, Calculator, Info } from 'lucide-react'
 import { PatternDiagram } from '@/components/pattern-diagram'
 import { StepChecklist } from '@/components/step-checklist'
 import { ValuesTable } from '@/components/values-table'
-import { MEASUREMENT_BY_KEY } from '@/lib/content/measurements'
 import { getUserContext } from '@/lib/data'
 import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import { getPattern, PATTERNS, stepSlug } from '@/lib/patterns'
-import { fmt, valuesToRecord } from '@/lib/patterns/types'
+import {
+  cmUnit,
+  formatLength,
+  formatNumber,
+  patternDescription,
+  patternFabrics,
+  patternPieces,
+  patternSteps,
+  patternValues,
+} from '@/lib/patterns/localized'
+import { valuesToRecord } from '@/lib/patterns/types'
 
 export function generateStaticParams() {
   return PATTERNS.map((p) => ({ slug: p.slug }))
@@ -21,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const pattern = getPattern(slug)
   if (!pattern) return {}
   const t = getDictionary(locale)
-  return { title: patternText(t, slug).name, description: pattern.description }
+  return { title: patternText(t, slug).name, description: patternDescription(locale, pattern) }
 }
 
 export default async function PatternPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -39,7 +48,9 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
 
   const result = pattern.compute(measurements)
   const v = valuesToRecord(result.values)
-  const steps = pattern.steps.map((s, i) => ({
+  const values = patternValues(locale, pattern, result.values)
+  const pieces = patternPieces(locale, pattern, result.pieces)
+  const steps = patternSteps(locale, pattern).map((s, i) => ({
     slug: stepSlug(pattern.slug, i),
     title: s.title,
     body: s.body(v),
@@ -63,10 +74,12 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
           <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
             {t.levels[pattern.level]}
           </span>
-          <span className="text-sm text-muted-foreground">{pattern.fabrics}</span>
+          <span className="text-sm text-muted-foreground">{patternFabrics(locale, pattern)}</span>
         </div>
         <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{label.name}</h1>
-        <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground text-pretty">{pattern.description}</p>
+        <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground text-pretty">
+          {patternDescription(locale, pattern)}
+        </p>
       </header>
 
       <div
@@ -91,14 +104,21 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
           {p.schema}
         </h2>
         <PatternDiagram
-          pieces={result.pieces}
+          pieces={pieces}
           title={p.schemaTitle(label.name)}
           description={p.schemaDescription(
-            result.pieces
-              .map((piece) => `${piece.name} (${piece.cut}, ${fmt(piece.bbox.w)} × ${fmt(piece.bbox.h)} cm)`)
-              .join(' ; '),
+            pieces
+              .map(
+                (piece) =>
+                  `${piece.name} (${piece.cut}${locale === 'ar' ? '،' : ','} ${formatNumber(
+                    piece.bbox.w,
+                    locale,
+                  )} × ${formatNumber(piece.bbox.h, locale)} ${cmUnit(locale)})`,
+              )
+              .join(locale === 'ar' ? ' ؛ ' : ' ; '),
           )}
           labels={t.ui.diagram}
+          locale={locale}
         />
       </section>
 
@@ -120,11 +140,14 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
               {p.values}
             </h2>
             <ValuesTable
-              values={result.values}
+              values={values}
               caption={p.valuesCaption(label.name)}
               headings={t.ui.valuesTable}
+              locale={locale}
             />
-            <p className="text-sm text-muted-foreground">{p.fabric(fmt(result.fabricCm / 100))}</p>
+            <p className="text-sm text-muted-foreground">
+              {p.fabric(formatNumber(result.fabricCm / 100, locale))}
+            </p>
           </div>
           <div className="flex flex-col gap-2 rounded-xl border bg-card p-4">
             <h3 className="font-semibold">{p.usedMeasurements}</h3>
@@ -132,7 +155,9 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
               {pattern.requiredMeasurements.map((k) => (
                 <div key={k} className="contents">
                   <dt className="text-muted-foreground">{t.measurements[k]}</dt>
-                  <dd className="text-end font-medium tabular-nums" dir="ltr">{`${fmt(measurements[k])} cm`}</dd>
+                  <dd className="text-end font-medium tabular-nums" dir="ltr">
+                    {formatLength(measurements[k], locale)}
+                  </dd>
                 </div>
               ))}
             </dl>

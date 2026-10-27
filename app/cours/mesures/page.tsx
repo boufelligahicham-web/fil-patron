@@ -4,20 +4,23 @@ import Link from 'next/link'
 import { CircleAlert, Lightbulb } from 'lucide-react'
 import { PageHeader } from '@/components/page-header'
 import { LessonComplete } from '@/components/lesson-complete'
-import { EASE_TABLE, MEASUREMENTS, type MeasurementGroup } from '@/lib/content/measurements'
+import { getEaseTable, getMeasurements, type MeasurementGroup } from '@/lib/content/measurements'
 import { getUserContext } from '@/lib/data'
 import { getDictionary } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 
-export const metadata: Metadata = {
-  title: 'Guide de prise de mesures',
-  description: 'Apprenez à prendre les tours, hauteurs et longueurs, et à choisir les bonnes valeurs d’aisance.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const meta = getDictionary(locale).meta.pages.mesures
+  return { title: meta.title, description: meta.description }
 }
 
 export default async function MesuresPage() {
   const [{ user, completed }, locale] = await Promise.all([getUserContext(), getLocale()])
   const t = getDictionary(locale)
   const p = t.pages.mesures
+  const measurements = getMeasurements(locale)
+  const easeTable = getEaseTable(locale)
 
   const groups: { id: MeasurementGroup; title: string; intro: string }[] = [
     { id: 'tours', title: p.toursTitle, intro: p.toursIntro },
@@ -68,7 +71,7 @@ export default async function MesuresPage() {
             <p className="text-muted-foreground">{g.intro}</p>
           </div>
           <ul className="grid gap-4 md:grid-cols-2">
-            {MEASUREMENTS.filter((m) => m.group === g.id).map((m) => (
+            {measurements.filter((m) => m.group === g.id).map((m) => (
               <li key={m.key} id={m.key} className="flex flex-col gap-3 rounded-xl border bg-card p-5">
                 <div className="flex items-baseline justify-between gap-3">
                   <h3 className="text-lg font-semibold">{t.measurements[m.key]}</h3>
@@ -119,7 +122,7 @@ export default async function MesuresPage() {
               </tr>
             </thead>
             <tbody className="divide-y">
-              {EASE_TABLE.map((row) => (
+              {easeTable.map((row) => (
                 <tr key={row.garment}>
                   <th scope="row" className="px-4 py-3 text-start font-medium">
                     {row.garment}

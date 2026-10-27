@@ -1,3 +1,6 @@
+import type { Locale } from '@/lib/i18n'
+import { GLOSSARY_AR } from './ar'
+
 export type GlossaryCategory = 'tissu' | 'construction' | 'couture' | 'mesures'
 
 export const GLOSSARY_CATEGORIES: { id: GlossaryCategory; label: string }[] = [
@@ -215,3 +218,12 @@ export const GLOSSARY: GlossaryTerm[] = [
     related: ['fourche'],
   },
 ]
+
+/** Glossaire traduit : les textes arabes remplacent les textes français. */
+export function getGlossary(locale: Locale): GlossaryTerm[] {
+  if (locale !== 'ar') return GLOSSARY
+  return GLOSSARY.map((term) => {
+    const ar = GLOSSARY_AR[term.id]
+    return ar ? { ...term, ...ar } : term
+  })
+}

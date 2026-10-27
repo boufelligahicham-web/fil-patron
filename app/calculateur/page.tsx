@@ -5,9 +5,10 @@ import { getUserContext } from '@/lib/data'
 import { getDictionary } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 
-export const metadata: Metadata = {
-  title: 'Calculateur de mensurations',
-  description: 'Entrez vos mesures et obtenez instantanément les valeurs de construction de chaque patron.',
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const meta = getDictionary(locale).meta.pages.calculateur
+  return { title: meta.title, description: meta.description }
 }
 
 export default async function CalculateurPage() {

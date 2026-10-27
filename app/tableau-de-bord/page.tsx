@@ -7,8 +7,12 @@ import { getUserContext } from '@/lib/data'
 import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import { COURSE_LESSONS, PATTERNS, stepSlug } from '@/lib/patterns'
+import { patternSteps } from '@/lib/patterns/localized'
 
-export const metadata: Metadata = { title: 'Ma progression' }
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  return { title: getDictionary(locale).meta.pages.dashboard.title }
+}
 
 function Bar({ value, max, label }: { value: number; max: number; label: string }) {
   return (
@@ -45,7 +49,7 @@ export default async function DashboardPage() {
       const i = p.steps.findIndex((_, idx) => !completed.has(stepSlug(p.slug, idx)))
       return i >= 0
         ? {
-            title: `${patternText(t, p.slug).name} — ${p.steps[i].title}`,
+            title: `${patternText(t, p.slug).name} — ${patternSteps(locale, p)[i].title}`,
             href: `/patrons/${p.slug}`,
           }
         : null

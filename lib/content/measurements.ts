@@ -1,3 +1,6 @@
+import type { Locale } from '@/lib/i18n'
+import { EASE_TABLE_AR, MEASUREMENTS_AR } from './ar'
+
 export type MeasurementKey =
   | 'tourPoitrine'
   | 'tourTaille'
@@ -241,3 +244,14 @@ export const EASE_TABLE = [
     why: 'Permet de plier le coude et de porter un vêtement en dessous.',
   },
 ]
+
+/** Définitions de mesures traduites (libellé, abréviation, mode d'emploi). */
+export function getMeasurements(locale: Locale): MeasurementDef[] {
+  if (locale !== 'ar') return MEASUREMENTS
+  return MEASUREMENTS.map((def) => ({ ...def, ...MEASUREMENTS_AR[def.key] }))
+}
+
+/** Table d'aisance traduite (mêmes lignes, mêmes valeurs). */
+export function getEaseTable(locale: Locale) {
+  return locale === 'ar' ? EASE_TABLE_AR : EASE_TABLE
+}

@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { ChevronDown, Search } from 'lucide-react'
 import { useLocale, useTranslations } from '@/components/locale-provider'
-import { GLOSSARY, GLOSSARY_CATEGORIES, type GlossaryCategory } from '@/lib/content/glossary'
+import { GLOSSARY_CATEGORIES, getGlossary, type GlossaryCategory } from '@/lib/content/glossary'
 import { cn } from '@/lib/utils'
 
 const normalize = (s: string) =>
@@ -12,14 +12,15 @@ const normalize = (s: string) =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
 
-const TERM_BY_ID = Object.fromEntries(GLOSSARY.map((t) => [t.id, t]))
-
 export function GlossaryExplorer() {
   const locale = useLocale()
   const t = useTranslations().ui.glossary
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<GlossaryCategory | 'all'>('all')
   const [open, setOpen] = useState<Set<string>>(new Set())
+
+  const terms = useMemo(() => getGlossary(locale), [locale])
+  const termById = useMemo(() => Object.fromEntries(terms.map((term) => [term.id, term])), [terms])
 
   const categories: { id: GlossaryCategory | 'all'; label: string }[] = [
     { id: 'all', label: t.all },
@@ -31,12 +32,14 @@ export function GlossaryExplorer() {
 
   const results = useMemo(() => {
     const q = normalize(query.trim())
-    return GLOSSARY.filter(
-      (term) =>
-        (category === 'all' || term.category === category) &&
-        (!q || normalize(`${term.term} ${term.short} ${term.detail}`).includes(q)),
-    ).sort((a, b) => a.term.localeCompare(b.term, locale === 'ar' ? 'ar' : 'fr'))
-  }, [query, category, locale])
+    return terms
+      .filter(
+        (term) =>
+          (category === 'all' || term.category === category) &&
+          (!q || normalize(`${term.term} ${term.short} ${term.detail}`).includes(q)),
+      )
+      .sort((a, b) => a.term.localeCompare(b.term, locale === 'ar' ? 'ar' : 'fr'))
+  }, [terms, query, category, locale])
 
   function setTermOpen(id: string, value: boolean) {
     setOpen((prev) => {
@@ -117,7 +120,7 @@ export function GlossaryExplorer() {
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="font-serif text-lg font-semibold">{term.term}</span>
                       <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
-                        {cat?.label}
+                        {cat ? t.categories[cat.id] : null}
                       </span>
                     </span>
                     <span className="text-sm text-muted-foreground">{term.short}</span>
@@ -139,7 +142,7 @@ export function GlossaryExplorer() {
                     <div className="flex flex-wrap items-center gap-2 text-sm">
                       <span className="text-muted-foreground">{t.related}</span>
                       {term.related
-                        .filter((id) => TERM_BY_ID[id])
+                        .filter((id) => termById[id])
                         .map((id) => (
                           <button
                             key={id}
@@ -147,7 +150,7 @@ export function GlossaryExplorer() {
                             onClick={() => jumpTo(id)}
                             className="rounded-md px-1.5 py-0.5 font-medium text-primary underline underline-offset-4 hover:bg-muted"
                           >
-                            {TERM_BY_ID[id].term}
+                            {termById[id].term}
                           </button>
                         ))}
                     </div>

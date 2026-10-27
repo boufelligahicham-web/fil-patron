@@ -15,7 +15,7 @@ import {
 } from '@/lib/content/measurements'
 import { dateLocale, patternText } from '@/lib/i18n'
 import { PATTERNS } from '@/lib/patterns'
-import { fmt } from '@/lib/patterns/types'
+import { cmUnit, formatNumber, patternValues } from '@/lib/patterns/localized'
 import { cn } from '@/lib/utils'
 
 type Draft = Record<MeasurementKey, string>
@@ -126,7 +126,7 @@ export function MeasurementCalculator({
                         aria-hidden="true"
                         className="pointer-events-none absolute top-1/2 end-3 -translate-y-1/2 text-sm text-muted-foreground"
                       >
-                        cm
+                        {cmUnit(locale)}
                       </span>
                     </div>
                     {err && (
@@ -208,11 +208,14 @@ export function MeasurementCalculator({
         </div>
         <div aria-live="polite" className="flex flex-col gap-3">
           <ValuesTable
-            values={result.values}
+            values={patternValues(locale, pattern, result.values)}
             caption={t.valuesCaption(patternText(dictionary, pattern.slug).name)}
             headings={dictionary.ui.valuesTable}
+            locale={locale}
           />
-          <p className="text-sm text-muted-foreground">{t.fabric(fmt(result.fabricCm / 100))}</p>
+          <p className="text-sm text-muted-foreground">
+            {t.fabric(formatNumber(result.fabricCm / 100, locale))}
+          </p>
         </div>
         {hasErrors && <p className="text-sm text-muted-foreground">{t.invalidUsesSample}</p>}
         <Link

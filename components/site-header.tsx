@@ -21,7 +21,7 @@ export async function SiteHeader() {
           <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Scissors className="size-4" aria-hidden="true" />
           </span>
-          Fil &amp; Patron
+          {t.brand}
         </Link>
         <div className="ms-auto flex items-center gap-2">
           <LanguageSwitcher locale={locale} />

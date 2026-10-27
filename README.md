@@ -43,6 +43,10 @@ Créez ensuite les tables et les politiques RLS avec `scripts/001_create_tables.
 - `components/language-switcher.tsx` bascule instantanément `lang`/`dir` sur `<html>`,
   écrit le cookie puis rafraîchit les composants serveur (`router.refresh()`).
 - Les polices arabes **Cairo** (texte) et **Amiri** (titres) sont chargées via Google Fonts.
+- Le contenu pédagogique est traduit intégralement : `lib/content/ar.ts` (glossaire,
+  mesures, table d'aisance) et `lib/patterns/ar.ts` (descriptions, pièces, valeurs,
+  étapes). En arabe, l'interface ne contient **aucun texte latin** : unités (`سم`, `م`),
+  lettres des points du schéma (أ، ب، ج…), noms de pièces et formules sont arabisés.
 
 ## Structure
 
