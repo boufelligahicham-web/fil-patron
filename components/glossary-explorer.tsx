@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { ChevronDown, Search } from 'lucide-react'
 import { useLocale, useTranslations } from '@/components/locale-provider'
+import { GlossaryIllustration } from '@/components/illustrations/glossary'
 import { GLOSSARY_CATEGORIES, getGlossary, type GlossaryCategory } from '@/lib/content/glossary'
 import { cn } from '@/lib/utils'
 
@@ -116,6 +117,9 @@ export function GlossaryExplorer() {
                 className="group rounded-xl border bg-card open:border-primary/40"
               >
                 <summary className="flex cursor-pointer list-none items-start gap-4 rounded-xl p-5 [&::-webkit-details-marker]:hidden">
+                  <div className="w-16 shrink-0 overflow-hidden rounded-lg border bg-muted/30 p-1 sm:w-20">
+                    <GlossaryIllustration id={term.id} locale={locale} />
+                  </div>
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="font-serif text-lg font-semibold">{term.term}</span>
@@ -131,6 +135,9 @@ export function GlossaryExplorer() {
                   />
                 </summary>
                 <div className="flex flex-col gap-4 border-t px-5 py-4">
+                  <div className="w-full max-w-[260px] overflow-hidden rounded-lg border bg-muted/30 p-2">
+                    <GlossaryIllustration id={term.id} locale={locale} />
+                  </div>
                   <p className="leading-relaxed">{term.detail}</p>
                   {term.example && (
                     <p className="rounded-lg bg-accent p-3 text-sm text-accent-foreground">

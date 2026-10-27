@@ -47,6 +47,10 @@ Créez ensuite les tables et les politiques RLS avec `scripts/001_create_tables.
   mesures, table d'aisance) et `lib/patterns/ar.ts` (descriptions, pièces, valeurs,
   étapes). En arabe, l'interface ne contient **aucun texte latin** : unités (`سم`, `م`),
   lettres des points du schéma (أ، ب، ج…), noms de pièces et formules sont arabisés.
+- Les illustrations sont des **SVG inline** (`components/illustrations/`), sans asset
+  externe : chaque mesure et chaque terme du glossaire a son schéma. Aucune figure
+  humaine ni animale n'est représentée — uniquement tissu, patron, ruban et petit
+  matériel. Les rares textes des schémas sont des cotes/angles, traduits (`سم` / `cm`).
 
 ## Structure
 

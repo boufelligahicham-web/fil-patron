@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { CircleAlert, Lightbulb } from 'lucide-react'
 import { PageHeader } from '@/components/page-header'
 import { LessonComplete } from '@/components/lesson-complete'
+import { MeasurementIllustration } from '@/components/illustrations/measurement'
 import { getEaseTable, getMeasurements, type MeasurementGroup } from '@/lib/content/measurements'
 import { getUserContext } from '@/lib/data'
 import { getDictionary } from '@/lib/i18n'
@@ -72,23 +73,30 @@ export default async function MesuresPage() {
           </div>
           <ul className="grid gap-4 md:grid-cols-2">
             {measurements.filter((m) => m.group === g.id).map((m) => (
-              <li key={m.key} id={m.key} className="flex flex-col gap-3 rounded-xl border bg-card p-5">
-                <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="text-lg font-semibold">{t.measurements[m.key]}</h3>
-                  <abbr
-                    title={t.measurements[m.key]}
-                    className="rounded bg-secondary px-2 py-0.5 font-mono text-xs no-underline text-secondary-foreground"
-                  >
-                    {m.abbr}
-                  </abbr>
+              <li key={m.key} id={m.key} className="rounded-xl border bg-card p-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                  <div className="mx-auto w-full max-w-[210px] shrink-0 rounded-lg border bg-muted/30 p-2 sm:mx-0 sm:w-[150px]">
+                    <MeasurementIllustration id={m.key} />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col gap-3">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="text-lg font-semibold">{t.measurements[m.key]}</h3>
+                      <abbr
+                        title={t.measurements[m.key]}
+                        className="rounded bg-secondary px-2 py-0.5 font-mono text-xs no-underline text-secondary-foreground"
+                      >
+                        {m.abbr}
+                      </abbr>
+                    </div>
+                    <p className="leading-relaxed">{m.howTo}</p>
+                    {m.tip && (
+                      <p className="flex gap-2 text-sm text-muted-foreground">
+                        <Lightbulb className="mt-0.5 size-4 shrink-0 text-accent-foreground" aria-hidden="true" />
+                        {m.tip}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <p className="leading-relaxed">{m.howTo}</p>
-                {m.tip && (
-                  <p className="flex gap-2 text-sm text-muted-foreground">
-                    <Lightbulb className="mt-0.5 size-4 shrink-0 text-accent-foreground" aria-hidden="true" />
-                    {m.tip}
-                  </p>
-                )}
               </li>
             ))}
           </ul>
