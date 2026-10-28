@@ -49,6 +49,11 @@ const fr = {
         description:
           'Glossaire interactif des termes de couture et de patronnage : droit-fil, pinces, marges, fourche, gousset…',
       },
+      emmanchure: {
+        title: 'Leçon de maître : l’emmanchure',
+        description:
+          'Construire l’emmanchure de base au millimètre : géométrie du tracé, angles, courbe à la règle japonaise, gestes d’atelier et comportement des tissus.',
+      },
       patrons: {
         title: 'Les patrons de base',
         description:
@@ -90,6 +95,7 @@ const fr = {
   nav: {
     mesures: 'Mesures',
     glossaire: 'Glossaire',
+    emmanchure: 'Leçon',
     patrons: 'Patrons',
     calculateur: 'Calculateur',
     dashboard: 'Ma progression',
@@ -100,6 +106,7 @@ const fr = {
   footer: {
     tagline: 'Fil & Patron — un atelier gratuit pour apprendre à son rythme.',
     mesures: 'Prise de mesures',
+    emmanchure: 'Leçon d’emmanchure',
     patrons: 'Patrons',
     calculateur: 'Calculateur',
   },
@@ -139,6 +146,13 @@ const fr = {
     dashboardText:
       'Créez un compte gratuit pour enregistrer vos mensurations, obtenir des patrons calculés à votre taille et cocher chaque étape terminée.',
     dashboardCta: 'Créer mon compte',
+    masterclass: {
+      badge: 'Atelier virtuel guidé',
+      title: 'Le tracé de l’emmanchure de base',
+      text: 'De l’acromion au creux axillaire : la géométrie, le geste et la matière, expliqués au millimètre.',
+      meta: 'Leçon de maître · 18 min',
+      cta: 'Ouvrir la leçon',
+    },
   },
   pages: {
     mesures: {
@@ -186,6 +200,15 @@ const fr = {
       intro:
         'Les mots de l’atelier, expliqués simplement. Recherchez un terme ou filtrez par thème, puis ouvrez une fiche pour approfondir.',
       doneTitle: 'Vocabulaire maîtrisé ?',
+    },
+    emmanchure: {
+      back: 'Tous les cours',
+      title: 'Leçon d’emmanchure',
+      start: 'Commencer le tracé',
+      memo: 'Repère d’atelier',
+      memoText:
+        'Une emmanchure se mesure au ruban posé sur chant, jamais à plat. La craie marque la coupe, le fil de bâti marque la couture.',
+      progress: 'Votre progression',
     },
     patrons: {
       eyebrow: 'Pratique',
@@ -402,6 +425,11 @@ const ar: Dictionary = {
         description:
           'معجم تفاعلي لمصطلحات الخياطة والباترون: اتجاه الخيط، البنّات، الهوامش، الشوكة، الجُسأة…',
       },
+      emmanchure: {
+        title: 'درس الأستاذ: حردة الكمّ',
+        description:
+          'بناء حردة الكمّ الأساسية بالمليمتر: هندسة الرسم، الزوايا، المنحنى بالمسطرة اليابانية، حركات الورشة وسلوك الأقمشة.',
+      },
       patrons: {
         title: 'الباترونات الأساسية',
         description: 'عباية، جلباب، سروال وقميص: مخططات تقنية ومراحل بناء مفصّلة.',
@@ -441,6 +469,7 @@ const ar: Dictionary = {
   nav: {
     mesures: 'المقاسات',
     glossaire: 'المصطلحات',
+    emmanchure: 'الدرس',
     patrons: 'الباترونات',
     calculateur: 'الحاسبة',
     dashboard: 'تقدّمي',
@@ -451,6 +480,7 @@ const ar: Dictionary = {
   footer: {
     tagline: 'فيل وباترون — ورشة مجانية للتعلّم على وتيرتكم.',
     mesures: 'أخذ المقاسات',
+    emmanchure: 'درس حردة الكمّ',
     patrons: 'الباترونات',
     calculateur: 'الحاسبة',
   },
@@ -489,6 +519,13 @@ const ar: Dictionary = {
     dashboardText:
       'أنشئوا حسابًا مجانيًا لحفظ مقاساتكم، والحصول على باترونات محسوبة على مقاسكم، وتعليم كل مرحلة منجزة.',
     dashboardCta: 'إنشاء حسابي',
+    masterclass: {
+      badge: 'ورشة افتراضية موجّهة',
+      title: 'رسم حردة الكمّ الأساسية',
+      text: 'من الأخرم إلى تجويف الإبط: الهندسة واليد والقماش، مشروحة بالمليمتر.',
+      meta: 'درس الأستاذ · 18 دقيقة',
+      cta: 'افتحوا الدرس',
+    },
   },
   pages: {
     mesures: {
@@ -533,6 +570,15 @@ const ar: Dictionary = {
       intro:
         'كلمات الورشة، مشروحة ببساطة. ابحثوا عن مصطلح أو صفّوه حسب الموضوع، ثم افتحوا بطاقة للتعمّق.',
       doneTitle: 'أتقنتم المفردات؟',
+    },
+    emmanchure: {
+      back: 'كل الدروس',
+      title: 'درس حردة الكمّ',
+      start: 'ابدأوا الرسم',
+      memo: 'مرجع الورشة',
+      memoText:
+        'تُقاس حردة الكمّ بشريط موضوع على حافته، لا مسطّحًا. الطبشور يعلّم القصّ، وخيط التثبيت يعلّم الخياطة.',
+      progress: 'تقدّمكم',
     },
     patrons: {
       eyebrow: 'تطبيق',

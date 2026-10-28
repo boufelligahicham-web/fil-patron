@@ -13,6 +13,7 @@ export function getPattern(slug: string) {
 export const COURSE_LESSONS = [
   { slug: 'cours/mesures', title: 'Guide de prise de mesures', href: '/cours/mesures' },
   { slug: 'cours/glossaire', title: 'Glossaire technique', href: '/cours/glossaire' },
+  { slug: 'cours/emmanchure', title: 'Leçon d’emmanchure', href: '/cours/emmanchure' },
 ]
 
 export function stepSlug(patternSlug: string, index: number) {

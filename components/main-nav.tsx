@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 const LINKS = [
   { href: '/cours/mesures', key: 'mesures' },
   { href: '/cours/glossaire', key: 'glossaire' },
+  { href: '/cours/emmanchure', key: 'emmanchure' },
   { href: '/patrons', key: 'patrons' },
   { href: '/calculateur', key: 'calculateur' },
 ] as const
@@ -26,8 +27,10 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
 
   const linkClass = (href: string) =>
     cn(
-      'rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground',
-      pathname.startsWith(href) ? 'bg-muted text-foreground' : 'text-muted-foreground',
+      'rounded-full px-3 py-2 text-sm font-medium transition-colors',
+      pathname.startsWith(href)
+        ? 'bg-atelier text-primary-foreground shadow-sm'
+        : 'text-ink-soft hover:bg-champagne-soft hover:text-ink',
     )
 
   const items = (
@@ -64,7 +67,7 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
             </Link>
             <Link
               href="/auth/inscription"
-              className="block rounded-md bg-primary px-3 py-2 text-center text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              className="block rounded-full bg-atelier px-4 py-2 text-center text-sm font-medium text-primary-foreground hover:opacity-90"
             >
               {t.nav.signUp}
             </Link>
@@ -79,7 +82,7 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
       <div className="hidden items-center gap-2 lg:flex">{items}</div>
       <button
         type="button"
-        className="flex size-10 items-center justify-center rounded-md hover:bg-muted lg:hidden"
+        className="flex size-10 items-center justify-center rounded-md hover:bg-champagne-soft lg:hidden"
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((o) => !o)}
@@ -90,7 +93,7 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
       <div
         id={menuId}
         hidden={!open}
-        className="absolute inset-x-0 top-16 border-b bg-background p-4 shadow-sm lg:hidden"
+        className="absolute inset-x-0 top-16 border-b border-tailor bg-linen p-4 shadow-sm lg:hidden"
       >
         <div className="flex flex-col gap-2">{items}</div>
       </div>

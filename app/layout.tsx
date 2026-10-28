@@ -1,15 +1,16 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Geist } from 'next/font/google'
+import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { MobileDock } from '@/components/mobile-dock'
 import { LocaleProvider } from '@/components/locale-provider'
 import { dirFor, getDictionary, htmlLang } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import './globals.css'
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
-const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces' })
+const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -49,9 +50,9 @@ export default async function RootLayout({
     <html
       lang={htmlLang(locale)}
       dir={dirFor(locale)}
-      className={`${geist.variable} ${fraunces.variable}`}
+      className={`${jakarta.variable} ${playfair.variable}`}
     >
-      <body className="flex min-h-svh flex-col antialiased">
+      <body className="flex min-h-svh flex-col pb-16 antialiased sm:pb-0">
         <LocaleProvider locale={locale}>
           <a
             href="#contenu"
@@ -64,6 +65,7 @@ export default async function RootLayout({
             {children}
           </main>
           <SiteFooter />
+          <MobileDock />
         </LocaleProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

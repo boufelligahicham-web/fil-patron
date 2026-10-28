@@ -18,6 +18,12 @@ export function formatNumber(n: number, locale: Locale) {
   return locale === 'ar' ? value.replace(',', '٫') : value
 }
 
+/** Nombre à deux décimales, pour les valeurs de contrôle (23,85 / 0,41). */
+export function formatNumber2(n: number, locale: Locale) {
+  const value = n.toFixed(2).replace('.', ',')
+  return locale === 'ar' ? value.replace(',', '٫') : value
+}
+
 /** Nombre + unité, par exemple « 12,5 cm » ou « 12٫5 سم ». */
 export function formatLength(n: number, locale: Locale) {
   return `${formatNumber(n, locale)} ${cmUnit(locale)}`

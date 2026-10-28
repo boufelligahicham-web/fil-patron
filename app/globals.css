@@ -6,8 +6,18 @@
 @custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme inline {
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --color-atelier: var(--atelier);
+  --color-atelier-deep: var(--atelier-deep);
+  --color-atelier-soft: var(--atelier-soft);
+  --color-champagne: var(--champagne);
+  --color-champagne-soft: var(--champagne-soft);
+  --color-linen: var(--linen);
+  --color-sand: var(--sand);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-tailor: var(--tailor);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -36,48 +46,69 @@
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.975 0.01 85);
-  --foreground: oklch(0.24 0.02 260);
-  --card: oklch(0.995 0.004 85);
-  --card-foreground: oklch(0.24 0.02 260);
-  --popover: oklch(0.995 0.004 85);
-  --popover-foreground: oklch(0.24 0.02 260);
-  --primary: oklch(0.43 0.08 195);
-  --primary-foreground: oklch(0.985 0.005 85);
-  --secondary: oklch(0.935 0.02 85);
-  --secondary-foreground: oklch(0.28 0.02 260);
-  --muted: oklch(0.945 0.015 85);
-  --muted-foreground: oklch(0.44 0.02 260);
-  --accent: oklch(0.92 0.05 65);
-  --accent-foreground: oklch(0.36 0.09 45);
-  --destructive: oklch(0.5 0.18 27);
-  --success: oklch(0.45 0.1 155);
-  --border: oklch(0.87 0.015 85);
-  --input: oklch(0.8 0.015 85);
-  --ring: oklch(0.5 0.1 195);
+  /* Palette « atelier » : émeraude, champagne, lin. */
+  --background: #fbf9f5;
+  --foreground: #2a302d;
+  --card: #ffffff;
+  --card-foreground: #2a302d;
+  --popover: #ffffff;
+  --popover-foreground: #2a302d;
+  --primary: #0d4037;
+  --primary-foreground: #fbf9f5;
+  --secondary: #f7f2e7;
+  --secondary-foreground: #775a19;
+  --muted: #efeeea;
+  --muted-foreground: #5e6863;
+  --accent: #f7f2e7;
+  --accent-foreground: #775a19;
+  --destructive: #ba1a1a;
+  --success: #0d4037;
+  --border: #e3ded4;
+  --input: #c0c8c5;
+  --ring: #0d4037;
+  --atelier: #0d4037;
+  --atelier-deep: #082f28;
+  --atelier-soft: #e6efeb;
+  --champagne: #c5a059;
+  --champagne-soft: #f7f2e7;
+  --linen: #fbf9f5;
+  --sand: #eadbce;
+  --ink: #2a302d;
+  --ink-soft: #5e6863;
+  --tailor: #e3ded4;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.19 0.015 260);
-    --foreground: oklch(0.95 0.01 85);
-    --card: oklch(0.23 0.015 260);
-    --card-foreground: oklch(0.95 0.01 85);
-    --popover: oklch(0.23 0.015 260);
-    --popover-foreground: oklch(0.95 0.01 85);
-    --primary: oklch(0.78 0.1 190);
-    --primary-foreground: oklch(0.2 0.03 220);
-    --secondary: oklch(0.28 0.015 260);
-    --secondary-foreground: oklch(0.93 0.01 85);
-    --muted: oklch(0.26 0.015 260);
-    --muted-foreground: oklch(0.77 0.015 85);
-    --accent: oklch(0.32 0.05 50);
-    --accent-foreground: oklch(0.88 0.07 65);
-    --destructive: oklch(0.7 0.16 25);
-    --success: oklch(0.78 0.12 155);
-    --border: oklch(0.34 0.015 260);
-    --input: oklch(0.42 0.015 260);
-    --ring: oklch(0.78 0.1 190);
+    --background: #101c18;
+    --foreground: #f2f0ed;
+    --card: #162823;
+    --card-foreground: #f2f0ed;
+    --popover: #162823;
+    --popover-foreground: #f2f0ed;
+    --primary: #a0d0c4;
+    --primary-foreground: #082f28;
+    --secondary: #1f342e;
+    --secondary-foreground: #e9c176;
+    --muted: #1b2d28;
+    --muted-foreground: #b9c4bf;
+    --accent: #2a2a1d;
+    --accent-foreground: #e9c176;
+    --destructive: #ffb4ab;
+    --success: #a0d0c4;
+    --border: #2b3a35;
+    --input: #3a4a44;
+    --ring: #a0d0c4;
+    --atelier: #a0d0c4;
+    --atelier-deep: #082f28;
+    --atelier-soft: #1b3f37;
+    --champagne: #e9c176;
+    --champagne-soft: #2a2a1d;
+    --linen: #101c18;
+    --sand: #3a3229;
+    --ink: #f2f0ed;
+    --ink-soft: #b9c4bf;
+    --tailor: #2b3a35;
   }
 }
 
@@ -118,19 +149,19 @@
 /* ------------------------------------------------------------------ */
 
 html[lang='ar'] {
-  --font-sans: 'Cairo', var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Amiri', var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: 'Cairo', var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Amiri', var(--font-playfair), ui-serif, Georgia, serif;
 }
 
 html[lang='ar'] body,
 html[lang='ar'] .font-sans {
-  font-family: 'Cairo', var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Cairo', var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* `@theme inline` fige les valeurs dans les utilitaires : on surcharge donc
    explicitement les titres et la classe `.font-serif`. */
 html[lang='ar'] :is(h1, h2, h3, h4, .font-serif) {
-  font-family: 'Amiri', var(--font-fraunces), ui-serif, Georgia, serif;
+  font-family: 'Amiri', var(--font-playfair), ui-serif, Georgia, serif;
   letter-spacing: normal;
   line-height: 1.5;
 }
@@ -147,3 +178,28 @@ html[lang='ar'] .uppercase {
   transform: scaleX(-1);
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Motifs d'atelier : papier de patron, filets, cartes                  */
+/* ------------------------------------------------------------------ */
+
+.paper-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--tailor) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--tailor) 55%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.paper-fade {
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
+  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
+}
+
+.rule-champagne {
+  background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+}
+
+/* En arabe, les chiffres restent lisibles dans les tableaux techniques. */
+html[lang='ar'] table {
+  font-variant-numeric: tabular-nums;
+}

@@ -12,16 +12,16 @@ export async function SiteHeader() {
   const t = getDictionary(locale)
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+    <header className="sticky top-0 z-40 border-b border-tailor bg-linen/90 backdrop-blur supports-[backdrop-filter]:bg-linen/75">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2 rounded-md font-serif text-base font-semibold sm:text-lg"
+          className="flex shrink-0 items-center gap-2.5 rounded-md font-serif text-base font-semibold text-ink sm:text-lg"
         >
-          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <span className="flex size-9 items-center justify-center rounded-lg bg-atelier text-primary-foreground shadow-sm">
             <Scissors className="size-4" aria-hidden="true" />
           </span>
-          {t.brand}
+          <span className="leading-none">{t.brand}</span>
         </Link>
         <div className="ms-auto flex items-center gap-2">
           <LanguageSwitcher locale={locale} />
@@ -32,7 +32,7 @@ export async function SiteHeader() {
                 <form action={signOut}>
                   <button
                     type="submit"
-                    className="w-full rounded-md px-3 py-2 text-start text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground lg:w-auto"
+                    className="w-full rounded-md px-3 py-2 text-start text-sm font-medium text-ink-soft hover:bg-champagne-soft hover:text-ink lg:w-auto"
                   >
                     {t.nav.signOut}
                   </button>

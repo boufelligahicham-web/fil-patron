@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Calculator, Ruler, Shirt } from 'lucide-react'
+import { ArrowRight, BookOpen, Calculator, Clock, GraduationCap, Ruler, Shirt } from 'lucide-react'
 import { PATTERNS } from '@/lib/patterns'
 import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
@@ -55,6 +55,46 @@ export default async function HomePage() {
             sizes="(min-width: 768px) 50vw, 100vw"
             className="object-cover"
           />
+        </div>
+      </section>
+
+      {/* Leçon de maître mise en avant ------------------------------- */}
+      <section
+        aria-labelledby="masterclass-title"
+        className="relative overflow-hidden rounded-3xl bg-atelier-deep text-[#fbf9f5] shadow-[0_24px_60px_-32px_rgba(8,47,40,0.6)]"
+      >
+        <div className="paper-grid pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute -end-20 -bottom-24 size-72 rounded-full bg-[#c5a059]/15 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="relative flex flex-col gap-5 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between lg:p-10">
+          <div className="flex max-w-2xl flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-[0.08em] text-[#eadbce] uppercase">
+                {t.home.masterclass.badge}
+              </span>
+              <span className="font-serif text-2xl text-[#c5a059]">01</span>
+            </div>
+            <h2 id="masterclass-title" className="font-serif text-2xl leading-tight font-semibold sm:text-3xl">
+              {t.home.masterclass.title}
+            </h2>
+            <p className="text-sm leading-7 text-[#fbf9f5]/80">{t.home.masterclass.text}</p>
+            <span className="inline-flex w-fit items-center gap-1.5 text-[11px] text-[#eadbce]">
+              <GraduationCap className="size-3.5 text-[#c5a059]" aria-hidden="true" />
+              {t.home.masterclass.meta}
+              <span className="mx-1 h-1 w-1 rounded-full bg-[#c5a059]/60" aria-hidden="true" />
+              <Clock className="size-3.5 text-[#c5a059]" aria-hidden="true" />
+              {t.pages.emmanchure.memo}
+            </span>
+          </div>
+          <Link
+            href="/cours/emmanchure"
+            className="inline-flex h-11 shrink-0 items-center gap-2 self-start rounded-lg bg-[#fbf9f5] px-5 text-sm font-semibold text-[#0d4037] transition-colors hover:bg-[#f7f2e7] lg:self-auto"
+          >
+            {t.home.masterclass.cta}
+            <ArrowRight className="dir-icon size-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
