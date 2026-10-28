@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { Scissors } from 'lucide-react'
 import { getCurrentUser } from '@/lib/supabase/server'
 import { signOut } from '@/app/actions'
 import { getDictionary } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
+import { BrandMark } from './brand-logo'
 import { LanguageSwitcher } from './language-switcher'
 import { MainNav } from './main-nav'
 
@@ -16,12 +16,10 @@ export async function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5 rounded-md font-serif text-base font-semibold text-ink sm:text-lg"
+          aria-label={t.brand}
+          className="flex shrink-0 items-center rounded-md"
         >
-          <span className="flex size-9 items-center justify-center rounded-lg bg-atelier text-primary-foreground shadow-sm">
-            <Scissors className="size-4" aria-hidden="true" />
-          </span>
-          <span className="leading-none">{t.brand}</span>
+          <BrandMark locale={locale} brand={t.brand} emblemClassName="size-9" />
         </Link>
         <div className="ms-auto flex items-center gap-2">
           <LanguageSwitcher locale={locale} />
