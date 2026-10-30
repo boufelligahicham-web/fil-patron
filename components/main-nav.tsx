@@ -29,8 +29,8 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
     cn(
       'rounded-full px-3 py-2 text-sm font-medium transition-colors',
       pathname.startsWith(href)
-        ? 'bg-atelier text-primary-foreground shadow-sm'
-        : 'text-ink-soft hover:bg-champagne-soft hover:text-ink',
+        ? 'bg-primary text-primary-foreground shadow-[0_0_14px_rgba(125,211,252,0.35)]'
+        : 'text-ink-soft hover:bg-white/[0.06] hover:text-ink',
     )
 
   const items = (
@@ -67,7 +67,7 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
             </Link>
             <Link
               href="/auth/inscription"
-              className="block rounded-full bg-atelier px-4 py-2 text-center text-sm font-medium text-primary-foreground hover:opacity-90"
+              className="block rounded-full bg-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground shadow-[0_0_14px_rgba(125,211,252,0.35)] hover:opacity-90"
             >
               {t.nav.signUp}
             </Link>
@@ -82,7 +82,7 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
       <div className="hidden items-center gap-2 lg:flex">{items}</div>
       <button
         type="button"
-        className="flex size-10 items-center justify-center rounded-md hover:bg-champagne-soft lg:hidden"
+        className="flex size-10 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-white/[0.06] hover:text-ink lg:hidden"
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((o) => !o)}
@@ -93,7 +93,7 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
       <div
         id={menuId}
         hidden={!open}
-        className="absolute inset-x-0 top-16 border-b border-tailor bg-linen p-4 shadow-sm lg:hidden"
+        className="glass absolute inset-x-0 top-16 border-x-0 border-t-0 p-4 shadow-ice lg:hidden"
       >
         <div className="flex flex-col gap-2">{items}</div>
       </div>

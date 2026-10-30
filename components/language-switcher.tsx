@@ -40,11 +40,11 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
       role="group"
       aria-label={t.a11y.language}
       className={cn(
-        'flex shrink-0 items-center gap-0.5 rounded-full border border-primary/25 bg-primary/5 p-1 shadow-sm transition-opacity',
+        'flex shrink-0 items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.04] p-1 shadow-sm transition-opacity',
         pending && 'opacity-70',
       )}
     >
-      <Languages className="ms-1.5 me-0.5 size-4 text-primary" aria-hidden="true" />
+      <Languages className="ms-1.5 me-0.5 hidden size-4 text-primary sm:block" aria-hidden="true" />
       {LOCALES.map((value) => {
         const active = value === current
         const short = value === 'fr' ? t.language.frShort : t.language.arShort

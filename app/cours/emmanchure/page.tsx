@@ -135,10 +135,10 @@ function renderBlock(block: Block, key: number, locale: Locale, figures: FigureT
       return (
         <figure
           key={key}
-          className="overflow-hidden rounded-xl border border-atelier/30 bg-atelier-deep p-5 text-[#fbf9f5]"
+          className="overflow-hidden rounded-xl border border-primary/30 bg-atelier-deep p-5 text-foreground"
         >
           {block.caption && (
-            <figcaption className="mb-3 text-[11px] tracking-[0.08em] text-[#c5a059] uppercase">
+            <figcaption className="mb-3 text-[11px] tracking-[0.08em] text-primary/80 uppercase">
               {block.caption}
             </figcaption>
           )}
@@ -284,32 +284,32 @@ export default async function EmmanchurePage() {
       {/* ---------------------------------------------------------------- */}
       {/* Hero : carnet d'atelier                                          */}
       {/* ---------------------------------------------------------------- */}
-      <header className="relative overflow-hidden rounded-3xl bg-atelier-deep text-[#fbf9f5] shadow-[0_24px_60px_-30px_rgba(8,47,40,0.65)]">
+      <header className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-atelier-deep via-card to-card text-foreground shadow-[0_24px_60px_-30px_rgba(14,77,110,0.75)]">
         <div className="paper-grid pointer-events-none absolute inset-0 opacity-[0.14]" aria-hidden="true" />
         <div
-          className="pointer-events-none absolute -end-24 -top-24 size-72 rounded-full bg-[#c5a059]/15 blur-3xl"
+          className="pointer-events-none absolute -end-24 -top-24 size-72 rounded-full bg-primary/20 blur-3xl"
           aria-hidden="true"
         />
         <div className="relative flex flex-col gap-6 p-6 sm:p-10 lg:p-12">
           <div className="flex items-start justify-between gap-4">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-[0.08em] text-[#eadbce] uppercase">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-[11px] font-semibold tracking-[0.08em] text-primary uppercase">
               {lesson.eyebrow}
             </span>
-            <span className="font-serif text-4xl leading-none text-[#c5a059] sm:text-5xl" aria-hidden="true">
+            <span className="font-serif text-4xl leading-none text-primary/80 sm:text-5xl" aria-hidden="true">
               01
             </span>
           </div>
 
           <div className="flex flex-col gap-3">
-            <h1 className="max-w-3xl font-serif text-4xl leading-[1.08] font-semibold tracking-tight text-[#fbf9f5] sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-3xl font-serif text-4xl leading-[1.08] font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               {lesson.title}
             </h1>
-            <p className="max-w-2xl font-serif text-lg leading-8 text-[#eadbce] italic sm:text-xl">
+            <p className="max-w-2xl font-serif text-lg leading-8 text-secondary-foreground italic sm:text-xl">
               {lesson.subtitle}
             </p>
           </div>
 
-          <p className="max-w-3xl text-sm leading-7 text-[#fbf9f5]/80 sm:text-base">{lesson.intro}</p>
+          <p className="max-w-3xl text-sm leading-7 text-ink-soft sm:text-base">{lesson.intro}</p>
 
           <div className="flex flex-wrap items-center gap-2">
             {[
@@ -319,9 +319,9 @@ export default async function EmmanchurePage() {
             ].map(({ icon: Icon, value }) => (
               <span
                 key={value}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-[#eadbce]"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-secondary-foreground"
               >
-                <Icon className="size-3.5 text-[#c5a059]" aria-hidden="true" />
+                <Icon className="size-3.5 text-primary" aria-hidden="true" />
                 {value}
               </span>
             ))}
@@ -330,14 +330,14 @@ export default async function EmmanchurePage() {
           <div className="flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
             <a
               href="#donnees"
-              className="inline-flex h-11 items-center gap-2 rounded-lg bg-[#fbf9f5] px-5 text-sm font-semibold text-[#0d4037] transition-colors hover:bg-[#f7f2e7]"
+              className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-[0_0_18px_rgba(125,211,252,0.35)] transition-opacity hover:opacity-90"
             >
               {p.start}
               <ArrowRight className="dir-icon size-4" aria-hidden="true" />
             </a>
             <Link
               href="/patrons/abaya"
-              className="inline-flex h-11 items-center gap-2 rounded-lg border border-white/20 px-5 text-sm font-medium text-[#fbf9f5] transition-colors hover:bg-white/10"
+              className="inline-flex h-11 items-center gap-2 rounded-lg border border-white/20 px-5 text-sm font-medium text-foreground transition-colors hover:bg-white/10"
             >
               {t.patterns.abaya.name}
             </Link>
@@ -404,19 +404,19 @@ export default async function EmmanchurePage() {
           ))}
 
           {/* À retenir */}
-          <section className="relative overflow-hidden rounded-3xl bg-atelier-deep p-6 text-[#fbf9f5] sm:p-8">
+          <section className="relative overflow-hidden rounded-3xl border border-primary/25 bg-gradient-to-br from-atelier-deep/70 to-card p-6 text-foreground sm:p-8">
             <div className="paper-grid pointer-events-none absolute inset-0 opacity-[0.1]" aria-hidden="true" />
             <div className="relative flex flex-col gap-5">
               <div className="flex items-center justify-between gap-3">
-                <h2 className="font-serif text-2xl font-semibold text-[#fbf9f5] sm:text-3xl">
+                <h2 className="font-serif text-2xl font-semibold text-foreground sm:text-3xl">
                   {lesson.closing.title}
                 </h2>
-                <span className="h-px flex-1 bg-gradient-to-r from-[#c5a059]/70 to-transparent" aria-hidden="true" />
+                <span className="h-px flex-1 bg-gradient-to-r from-primary/70 to-transparent" aria-hidden="true" />
               </div>
               <ol className="flex flex-col gap-3">
                 {lesson.closing.items.map((item, i) => (
-                  <li key={item} className="flex gap-3 text-sm leading-6 text-[#fbf9f5]/85">
-                    <span className="font-serif text-base text-[#c5a059]" aria-hidden="true">
+                  <li key={item} className="flex gap-3 text-sm leading-6 text-ink-soft">
+                    <span className="font-serif text-base text-primary" aria-hidden="true">
                       {i + 1}
                     </span>
                     <span>{item}</span>

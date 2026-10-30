@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { MobileDock } from '@/components/mobile-dock'
@@ -9,7 +9,7 @@ import { dirFor, getDictionary, htmlLang } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
 import './globals.css'
 
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,10 +31,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
+  colorScheme: 'dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8f5ee' },
-    { media: '(prefers-color-scheme: dark)', color: '#1c1f27' },
+    { media: '(prefers-color-scheme: light)', color: '#0a0e1a' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0e1a' },
   ],
 }
 
@@ -50,7 +50,7 @@ export default async function RootLayout({
     <html
       lang={htmlLang(locale)}
       dir={dirFor(locale)}
-      className={`${jakarta.variable} ${playfair.variable}`}
+      className={`dark ${inter.variable} ${playfair.variable}`}
     >
       <body className="flex min-h-svh flex-col pb-16 antialiased sm:pb-0">
         <LocaleProvider locale={locale}>

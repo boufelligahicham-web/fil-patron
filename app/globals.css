@@ -3,10 +3,10 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
-@custom-variant dark (@media (prefers-color-scheme: dark));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
   --color-atelier: var(--atelier);
   --color-atelier-deep: var(--atelier-deep);
@@ -46,71 +46,38 @@
 
 :root {
   --radius: 0.75rem;
-  /* Palette « atelier » : émeraude, champagne, lin. */
-  --background: #fbf9f5;
-  --foreground: #2a302d;
-  --card: #ffffff;
-  --card-foreground: #2a302d;
-  --popover: #ffffff;
-  --popover-foreground: #2a302d;
-  --primary: #0d4037;
-  --primary-foreground: #fbf9f5;
-  --secondary: #f7f2e7;
-  --secondary-foreground: #775a19;
-  --muted: #efeeea;
-  --muted-foreground: #5e6863;
-  --accent: #f7f2e7;
-  --accent-foreground: #775a19;
-  --destructive: #ba1a1a;
-  --success: #0d4037;
-  --border: #e3ded4;
-  --input: #c0c8c5;
-  --ring: #0d4037;
-  --atelier: #0d4037;
-  --atelier-deep: #082f28;
-  --atelier-soft: #e6efeb;
-  --champagne: #c5a059;
-  --champagne-soft: #f7f2e7;
-  --linen: #fbf9f5;
-  --sand: #eadbce;
-  --ink: #2a302d;
-  --ink-soft: #5e6863;
-  --tailor: #e3ded4;
+  /* Palette « Glacier » : bleu de nuit, glace, givre. */
+  --background: #0a0e1a;
+  --foreground: #e0e8f0;
+  --card: #141c2e;
+  --card-foreground: #e0e8f0;
+  --popover: #141c2e;
+  --popover-foreground: #e0e8f0;
+  --primary: #7dd3fc;
+  --primary-foreground: #001f2e;
+  --secondary: #1a3a4e;
+  --secondary-foreground: #c0d8e8;
+  --muted: #1a2438;
+  --muted-foreground: #a0b4c4;
+  --accent: #1a3a4e;
+  --accent-foreground: #c0d8e8;
+  --destructive: #ff6b6b;
+  --success: #34d399;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #7dd3fc;
+  --atelier: #7dd3fc;
+  --atelier-deep: #0e4d6e;
+  --atelier-soft: #12293c;
+  --champagne: #e9c176;
+  --champagne-soft: #1e2a36;
+  --linen: #0a0e1a;
+  --sand: #1a2438;
+  --ink: #e0e8f0;
+  --ink-soft: #a0b4c4;
+  --tailor: rgba(255, 255, 255, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #101c18;
-    --foreground: #f2f0ed;
-    --card: #162823;
-    --card-foreground: #f2f0ed;
-    --popover: #162823;
-    --popover-foreground: #f2f0ed;
-    --primary: #a0d0c4;
-    --primary-foreground: #082f28;
-    --secondary: #1f342e;
-    --secondary-foreground: #e9c176;
-    --muted: #1b2d28;
-    --muted-foreground: #b9c4bf;
-    --accent: #2a2a1d;
-    --accent-foreground: #e9c176;
-    --destructive: #ffb4ab;
-    --success: #a0d0c4;
-    --border: #2b3a35;
-    --input: #3a4a44;
-    --ring: #a0d0c4;
-    --atelier: #a0d0c4;
-    --atelier-deep: #082f28;
-    --atelier-soft: #1b3f37;
-    --champagne: #e9c176;
-    --champagne-soft: #2a2a1d;
-    --linen: #101c18;
-    --sand: #3a3229;
-    --ink: #f2f0ed;
-    --ink-soft: #b9c4bf;
-    --tailor: #2b3a35;
-  }
-}
 
 @layer base {
   * {
@@ -149,13 +116,13 @@
 /* ------------------------------------------------------------------ */
 
 html[lang='ar'] {
-  --font-sans: 'Cairo', var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Cairo', var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Amiri', var(--font-playfair), ui-serif, Georgia, serif;
 }
 
 html[lang='ar'] body,
 html[lang='ar'] .font-sans {
-  font-family: 'Cairo', var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Cairo', var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* `@theme inline` fige les valeurs dans les utilitaires : on surcharge donc
@@ -202,4 +169,35 @@ html[lang='ar'] .uppercase {
 /* En arabe, les chiffres restent lisibles dans les tableaux techniques. */
 html[lang='ar'] table {
   font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ */
+/* Glacier : verre dépoli, halos de lumière froide                     */
+/* ------------------------------------------------------------------ */
+
+.glass {
+  background: color-mix(in srgb, var(--card) 62%, transparent);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.glass-bar {
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.ice-glow {
+  box-shadow: 0 0 18px rgb(125 211 252 / 0.35);
+}
+
+.ice-halo {
+  background: radial-gradient(circle at 50% 0%, rgb(125 211 252 / 0.14), transparent 70%);
+}
+
+/* Les ombres portées restent froides et discrètes. */
+.shadow-ice {
+  box-shadow: 0 6px 28px rgb(0 0 0 / 0.35);
 }
