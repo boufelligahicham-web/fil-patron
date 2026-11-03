@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { CircleAlert, Lightbulb } from 'lucide-react'
 import { PageHeader } from '@/components/page-header'
 import { LessonComplete } from '@/components/lesson-complete'
+import { SizeGuide } from '@/components/size-guide'
+import { PageNarration } from '@/components/speech/narration'
+import { SpeechBar } from '@/components/speech/speech-bar'
 import { MeasurementIllustration } from '@/components/illustrations/measurement'
 import { getEaseTable, getMeasurements, type MeasurementGroup } from '@/lib/content/measurements'
 import { getUserContext } from '@/lib/data'
@@ -22,6 +25,7 @@ export default async function MesuresPage() {
   const p = t.pages.mesures
   const measurements = getMeasurements(locale)
   const easeTable = getEaseTable(locale)
+  const narration = [p.title, p.intro, ...p.rules, p.note].join(' ')
 
   const groups: { id: MeasurementGroup; title: string; intro: string }[] = [
     { id: 'tours', title: p.toursTitle, intro: p.toursIntro },
@@ -30,9 +34,12 @@ export default async function MesuresPage() {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-12 sm:px-6">
+      <PageNarration title={p.title} text={narration} />
       <PageHeader eyebrow={p.eyebrow} title={p.title}>
         {p.intro}
       </PageHeader>
+
+      <SpeechBar text={narration} />
 
       <section aria-labelledby="regles" className="grid items-start gap-8 md:grid-cols-5">
         <div className="flex flex-col gap-5 md:col-span-3">
@@ -102,6 +109,8 @@ export default async function MesuresPage() {
           </ul>
         </section>
       ))}
+
+      <SizeGuide />
 
       <section aria-labelledby="aisance" className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">

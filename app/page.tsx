@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Calculator, Clock, GraduationCap, Ruler, Shirt } from 'lucide-react'
+import { ArrowRight, BookOpen, Calculator, Clock, GraduationCap, MonitorPlay, Ruler, Shirt } from 'lucide-react'
 import { PATTERNS } from '@/lib/patterns'
 import { getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
@@ -61,7 +61,7 @@ export default async function HomePage() {
       {/* Leçon de maître mise en avant ------------------------------- */}
       <section
         aria-labelledby="masterclass-title"
-        className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-atelier-deep to-card text-foreground shadow-[0_24px_60px_-32px_rgba(14,77,110,0.7)]"
+        className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-atelier-deep to-card text-foreground shadow-lift"
       >
         <div className="paper-grid pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
         <div
@@ -90,7 +90,7 @@ export default async function HomePage() {
           </div>
           <Link
             href="/cours/emmanchure"
-            className="inline-flex h-11 shrink-0 items-center gap-2 self-start rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-[0_0_18px_rgba(125,211,252,0.35)] transition-opacity hover:opacity-90 lg:self-auto"
+            className="glow inline-flex h-11 shrink-0 items-center gap-2 self-start rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 lg:self-auto"
           >
             {t.home.masterclass.cta}
             <ArrowRight className="dir-icon size-4" aria-hidden="true" />
@@ -126,6 +126,38 @@ export default async function HomePage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* Deux outils de terrain -------------------------------------- */}
+      <section aria-label={t.sizes.title} className="grid gap-4 sm:grid-cols-2">
+        <Link
+          href="/cours/mesures#tailles"
+          className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition-colors hover:border-primary/50"
+        >
+          <span className="grid size-10 place-items-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+            <Ruler className="size-5" aria-hidden="true" />
+          </span>
+          <h2 className="text-lg font-semibold group-hover:text-primary">{t.sizes.title}</h2>
+          <p className="text-sm leading-6 text-muted-foreground">{t.sizes.fullText}</p>
+          <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-semibold text-primary">
+            {t.sizes.openFull}
+            <ArrowRight className="dir-icon size-4" aria-hidden="true" />
+          </span>
+        </Link>
+        <Link
+          href="/cours/emmanchure#demonstration"
+          className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition-colors hover:border-primary/50"
+        >
+          <span className="grid size-10 place-items-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+            <MonitorPlay className="size-5" aria-hidden="true" />
+          </span>
+          <h2 className="text-lg font-semibold group-hover:text-primary">{t.film.title}</h2>
+          <p className="text-sm leading-6 text-muted-foreground">{t.home.masterclass.text}</p>
+          <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-semibold text-primary">
+            {t.film.open}
+            <ArrowRight className="dir-icon size-4" aria-hidden="true" />
+          </span>
+        </Link>
       </section>
 
       <section aria-labelledby="patrons-title" className="flex flex-col gap-8">

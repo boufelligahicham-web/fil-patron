@@ -40,7 +40,7 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
       role="group"
       aria-label={t.a11y.language}
       className={cn(
-        'flex shrink-0 items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.04] p-1 shadow-sm transition-opacity',
+        'flex shrink-0 items-center gap-0.5 rounded-full border border-border bg-card/70 p-1 shadow-sm transition-opacity',
         pending && 'opacity-70',
       )}
     >

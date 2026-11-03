@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ArrowRight, Calculator, GraduationCap, Ruler, Scissors } from 'lucide-react'
+import { ArrowRight, Calculator, GraduationCap, MonitorPlay, Ruler, Scissors } from 'lucide-react'
+import { AtelierFilm } from '@/components/atelier-film'
 import type { CarnetItem } from '@/components/carnet-filters'
 import { CarnetFilters } from '@/components/carnet-filters'
+import { SizeGuide } from '@/components/size-guide'
+import { PageNarration } from '@/components/speech/narration'
+import { SpeechBar } from '@/components/speech/speech-bar'
 import { getUserContext } from '@/lib/data'
 import { dateLocale, getDictionary, patternText } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
@@ -70,9 +74,7 @@ export default async function DashboardPage() {
   const activePatterns = PATTERNS.filter((p) =>
     p.steps.some((_, index) => completed.has(stepSlug(p.slug, index))),
   ).length
-  const measuresValue = hasSavedMeasurements
-    ? c.measuresOk
-    : c.measuresNone
+  const measuresValue = hasSavedMeasurements ? c.measuresOk : c.measuresNone
   const measuresDate =
     hasSavedMeasurements && measurementsUpdatedAt
       ? new Intl.DateTimeFormat(dateLocale(locale), { day: 'numeric', month: 'short' }).format(
@@ -81,101 +83,151 @@ export default async function DashboardPage() {
       : null
   const displayName = user?.email?.split('@')[0]
 
+  const metrics = [
+    {
+      key: 'patterns',
+      icon: Scissors,
+      value: n(activePatterns),
+      label: c.patternsActive,
+    },
+    {
+      key: 'measures',
+      icon: Ruler,
+      value: measuresDate ?? measuresValue,
+      label: measuresDate ? c.measuresOk : c.lastMeasures,
+    },
+    {
+      key: 'practice',
+      icon: GraduationCap,
+      value: `${n(progress)}%`,
+      label: c.practice,
+    },
+  ]
+
   return (
-    <div className="relative mx-auto w-full max-w-3xl px-4 pt-6 pb-2 sm:px-6">
-      <div className="ice-halo pointer-events-none absolute inset-x-0 -top-28 h-72" aria-hidden="true" />
+    <div className="relative mx-auto w-full max-w-3xl px-4 pt-6 pb-4 sm:px-6">
+      <PageNarration title={c.title} text={c.narration} />
+      <div className="halo pointer-events-none absolute inset-x-0 -top-24 h-64" aria-hidden="true" />
 
       {/* 1. Accueil d'atelier */}
       <section className="relative">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">
             <span className="size-1.5 animate-pulse rounded-full bg-primary" aria-hidden="true" />
             {c.eyebrow}
           </p>
-          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-ink-soft">
-            <span
-              className="inline-block size-1.5 rounded-full bg-success shadow-[0_0_6px_#34d399]"
-              aria-hidden="true"
-            />
+          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card/70 px-2.5 py-0.5 text-[11px] text-muted-foreground">
+            <span className="inline-block size-1.5 rounded-full bg-success" aria-hidden="true" />
             {c.status}
           </span>
         </div>
         <h1 className="mt-1.5 font-serif text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {c.title}
         </h1>
-        <p className="mt-1 text-xs text-ink-soft italic">
+        <p className="mt-1 text-xs text-muted-foreground italic">
           {c.motto} — {displayName ? c.welcome(displayName) : c.welcomeGuest}
         </p>
       </section>
 
-      {/* 2. Chiffres de l'atelier */}
-      <section className="mt-5 grid grid-cols-3 gap-2.5" aria-label={c.title}>
-        <div className="glass flex flex-col justify-between rounded-xl p-3 shadow-ice">
-          <span className="mb-2 flex size-7 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
-            <Scissors className="size-[17px]" aria-hidden="true" />
-          </span>
-          <span className="block text-xl leading-none font-bold text-foreground">{n(activePatterns)}</span>
-          <span className="mt-1.5 block text-[11px] font-medium text-ink-soft">{c.patternsActive}</span>
-        </div>
-        <div className="glass flex flex-col justify-between rounded-xl p-3 shadow-ice">
-          <span className="mb-2 flex size-7 items-center justify-center rounded-lg border border-secondary/30 bg-secondary/40 text-secondary-foreground">
-            <Ruler className="size-[17px]" aria-hidden="true" />
-          </span>
-          <span className="block text-base leading-none font-bold text-foreground">
-            {measuresDate ?? measuresValue}
-          </span>
-          <span className="mt-1.5 block text-[11px] font-medium text-ink-soft">
-            {measuresDate ? c.measuresOk : c.lastMeasures}
-          </span>
-        </div>
-        <div className="glass flex flex-col justify-between rounded-xl p-3 shadow-ice">
-          <span className="mb-2 flex size-7 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
-            <GraduationCap className="size-[17px]" aria-hidden="true" />
-          </span>
-          <span className="block text-xl leading-none font-bold text-foreground">{`${n(progress)}%`}</span>
-          <span className="mt-1.5 block text-[11px] font-medium text-ink-soft">{c.practice}</span>
-        </div>
+      {/* 2. Guide vocal du carnet */}
+      <SpeechBar text={c.narration} className="relative mt-4" />
+
+      {/* 3. Chiffres de l'atelier */}
+      <section className="mt-4 grid grid-cols-3 gap-2.5" aria-label={c.title}>
+        {metrics.map(({ key, icon: Icon, value, label }) => (
+          <div key={key} className="glass flex flex-col justify-between rounded-xl p-3 shadow-soft">
+            <span className="mb-2 flex size-7 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
+              <Icon className="size-[17px]" aria-hidden="true" />
+            </span>
+            <span className="block text-lg leading-tight font-bold text-foreground">{value}</span>
+            <span className="mt-1.5 block text-[11px] leading-4 font-medium text-muted-foreground">
+              {label}
+            </span>
+          </div>
+        ))}
       </section>
 
-      {/* 3. Leçon de maître en avant */}
-      <section className="relative mt-5 overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-atelier-deep/80 via-card to-card p-4 shadow-[0_8px_32px_rgba(14,77,110,0.35)] sm:p-5">
+      {/* 3 bis. Raccourcis : sauter directement au bon atelier */}
+      <nav
+        aria-label={c.jump.label}
+        className="-mx-1 mt-3 flex gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {[
+          { href: '#demonstration', icon: MonitorPlay, label: c.jump.demo },
+          { href: '#tailles', icon: Ruler, label: c.jump.sizes },
+          { href: '#travaux', icon: Scissors, label: c.jump.works },
+          { href: '/calculateur', icon: Calculator, label: c.jump.meter },
+        ].map(({ href, icon: Icon, label }) =>
+          href.startsWith('#') ? (
+            <a
+              key={href}
+              href={href}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card/80 px-3 py-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              <Icon className="size-3.5 text-primary" aria-hidden="true" />
+              {label}
+            </a>
+          ) : (
+            <Link
+              key={href}
+              href={href}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card/80 px-3 py-1.5 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              <Icon className="size-3.5 text-primary" aria-hidden="true" />
+              {label}
+            </Link>
+          ),
+        )}
+      </nav>
+      <section
+        aria-labelledby="featured-title"
+        className="relative mt-5 overflow-hidden rounded-2xl border border-primary/25 bg-gradient-to-br from-accent via-card to-card p-4 shadow-soft sm:p-5"
+      >
         <div
           className="pointer-events-none absolute -end-8 -top-8 size-36 rounded-full bg-primary/20 blur-2xl"
           aria-hidden="true"
         />
         <div className="relative flex items-start justify-between gap-4">
-          <span className="rounded-full border border-primary/30 bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
+          <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
             {c.featured}
           </span>
           <span className="font-serif text-lg leading-none font-bold text-primary/80 italic">01</span>
         </div>
-        <h2 className="relative mt-2 font-serif text-lg leading-snug font-bold text-foreground">
+        <h2
+          id="featured-title"
+          className="relative mt-2 font-serif text-lg leading-snug font-bold text-foreground"
+        >
           {t.home.masterclass.title}
         </h2>
-        <p className="relative mt-1 line-clamp-2 text-xs leading-6 text-ink-soft">
+        <p className="relative mt-1 line-clamp-2 text-xs leading-6 text-muted-foreground">
           {t.home.masterclass.text}
         </p>
-        <div className="relative mt-3 flex items-center justify-between gap-3 border-t border-white/10 pt-3">
+        <div className="relative mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3">
           <span className="flex items-center gap-1.5 text-[11px] font-medium text-secondary-foreground">
             <GraduationCap className="size-4 text-primary" aria-hidden="true" />
             {`${c.featuredMeta} · ${c.minutes(18)}`}
           </span>
           <Link
             href="/cours/emmanchure"
-            className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground shadow-[0_0_15px_rgba(125,211,252,0.4)] transition-opacity hover:opacity-90"
+            className="glow inline-flex shrink-0 items-center gap-1 rounded-lg bg-primary px-3.5 py-1.5 text-xs font-bold text-primary-foreground transition-opacity hover:opacity-90"
           >
             {c.featuredCta}
           </Link>
         </div>
       </section>
 
-      {/* 4. Travaux sur la table */}
-      <section className="mt-6" aria-labelledby="travaux">
-        <div className="flex items-center justify-between gap-3">
-          <h2 id="travaux" className="text-base font-bold text-foreground">
+      {/* 5. Démonstration animée */}
+      <div id="demonstration" className="mt-3 scroll-mt-24">
+        <AtelierFilm compact />
+      </div>
+
+      {/* 6. Travaux sur la table */}
+      <section id="travaux" className="mt-6 scroll-mt-24" aria-labelledby="travaux-title">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 id="travaux-title" className="text-base font-bold text-foreground">
             {c.works}
           </h2>
-          <span className="rounded-full border border-white/[0.06] bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-medium text-ink-soft">
+          <span className="rounded-full border border-border bg-card/70 px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
             {c.projects(items.length)}
           </span>
         </div>
@@ -184,21 +236,24 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* 5. Raccourci calculateur */}
-      <section className="glass mt-6 flex items-center justify-between gap-3 rounded-xl p-3.5 shadow-ice">
+      {/* 7. Guide des tailles */}
+      <SizeGuide compact className="mt-6" />
+
+      {/* 8. Raccourci calculateur */}
+      <section className="glass mt-3 flex items-center justify-between gap-3 rounded-xl p-3.5 shadow-soft">
         <div className="flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary">
             <Calculator className="size-5" aria-hidden="true" />
           </span>
           <div>
             <h2 className="text-sm font-semibold text-foreground">{c.quickTitle}</h2>
-            <p className="text-xs text-ink-soft">{c.quickText}</p>
+            <p className="text-xs text-muted-foreground">{c.quickText}</p>
           </div>
         </div>
         <Link
           href="/calculateur"
           aria-label={c.quickTitle}
-          className="rounded-lg bg-primary p-2 text-primary-foreground shadow-[0_0_12px_rgba(125,211,252,0.3)] transition-opacity hover:opacity-90"
+          className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90"
         >
           <ArrowRight className="dir-icon size-[18px]" aria-hidden="true" />
         </Link>

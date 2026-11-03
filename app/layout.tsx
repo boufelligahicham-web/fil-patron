@@ -5,8 +5,11 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { MobileDock } from '@/components/mobile-dock'
 import { LocaleProvider } from '@/components/locale-provider'
+import { SpeechProvider } from '@/components/speech/speech-provider'
 import { dirFor, getDictionary, htmlLang } from '@/lib/i18n'
 import { getLocale } from '@/lib/locale'
+import { getTheme } from '@/lib/theme-server'
+import { themeClass } from '@/lib/theme'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -31,9 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
+  colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#0a0e1a' },
+    { media: '(prefers-color-scheme: light)', color: '#faf6f0' },
     { media: '(prefers-color-scheme: dark)', color: '#0a0e1a' },
   ],
 }
@@ -43,29 +46,33 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const locale = await getLocale()
+  const [locale, theme] = await Promise.all([getLocale(), getTheme()])
   const t = getDictionary(locale)
 
   return (
     <html
       lang={htmlLang(locale)}
       dir={dirFor(locale)}
-      className={`dark ${inter.variable} ${playfair.variable}`}
+      className={`${themeClass(theme)} ${inter.variable} ${playfair.variable}`}
+      data-theme={theme}
+      suppressHydrationWarning
     >
       <body className="flex min-h-svh flex-col pb-16 antialiased sm:pb-0">
         <LocaleProvider locale={locale}>
-          <a
-            href="#contenu"
-            className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:start-3"
-          >
-            {t.a11y.skip}
-          </a>
-          <SiteHeader />
-          <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
-            {children}
-          </main>
-          <SiteFooter />
-          <MobileDock />
+          <SpeechProvider>
+            <a
+              href="#contenu"
+              className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:start-3"
+            >
+              {t.a11y.skip}
+            </a>
+            <SiteHeader theme={theme} />
+            <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
+              {children}
+            </main>
+            <SiteFooter />
+            <MobileDock />
+          </SpeechProvider>
         </LocaleProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

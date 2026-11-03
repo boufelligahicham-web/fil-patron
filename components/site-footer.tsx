@@ -17,16 +17,16 @@ export async function SiteFooter() {
 
   return (
     <footer className="mx-auto mt-16 w-full max-w-6xl px-4 pb-6 sm:px-6">
-      <div className="glass rounded-2xl p-5 shadow-ice sm:p-6">
+      <div className="glass rounded-2xl p-5 shadow-soft sm:p-6">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-2">
             <BrandMark locale={locale} brand={t.brand} size="lg" emblemClassName="size-11" />
-            <p className="max-w-md text-xs leading-6 text-ink-soft">{t.footer.tagline}</p>
+            <p className="max-w-md text-xs leading-6 text-muted-foreground">{t.footer.tagline}</p>
           </div>
         </div>
         <nav
           aria-label={t.a11y.footerNav}
-          className="mt-5 border-t border-white/[0.08] pt-4"
+          className="mt-5 border-t border-border pt-4"
         >
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
             {links.map((link) => (
@@ -36,7 +36,7 @@ export async function SiteFooter() {
                   className={
                     link.featured
                       ? 'font-semibold text-primary underline-offset-4 hover:underline'
-                      : 'text-ink-soft underline-offset-4 transition-colors hover:text-ink hover:underline'
+                      : 'text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline'
                   }
                 >
                   {link.label}

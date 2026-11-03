@@ -15,7 +15,50 @@ const LINKS = [
   { href: '/calculateur', key: 'calculateur' },
 ] as const
 
-export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutSlot: ReactNode }) {
+function linkClass(pathname: string, href: string, active: string) {
+  return cn(
+    'rounded-full px-3 py-2 text-sm font-medium transition-colors',
+    pathname.startsWith(href)
+      ? `${active} bg-primary text-primary-foreground shadow-sm`
+      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+  )
+}
+
+/** Liens de navigation, en ligne sur grand écran. */
+export function NavLinks({ className }: { className?: string }) {
+  const t = useTranslations()
+  const pathname = usePathname()
+
+  return (
+    <ul className={cn('items-center gap-0.5 xl:gap-1', className)}>
+      {LINKS.map((link) => (
+        <li key={link.href}>
+          <Link
+            href={link.href}
+            className={cn(linkClass(pathname, link.href, 'glow'), 'block whitespace-nowrap')}
+            aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+          >
+            {t.nav[link.key]}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/**
+ * Tiroir mobile : les cinq entrées du parcours, l'accès au compte, puis les
+ * réglages (ambiance et langue) qui n'ont pas leur place dans la barre étroite.
+ */
+export function MobileMenu({
+  isAuthed,
+  signOutSlot,
+  extras,
+}: {
+  isAuthed: boolean
+  signOutSlot: ReactNode
+  extras?: ReactNode
+}) {
   const t = useTranslations()
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
@@ -25,78 +68,80 @@ export function MainNav({ isAuthed, signOutSlot }: { isAuthed: boolean; signOutS
     setOpen(false)
   }, [pathname])
 
-  const linkClass = (href: string) =>
-    cn(
-      'rounded-full px-3 py-2 text-sm font-medium transition-colors',
-      pathname.startsWith(href)
-        ? 'bg-primary text-primary-foreground shadow-[0_0_14px_rgba(125,211,252,0.35)]'
-        : 'text-ink-soft hover:bg-white/[0.06] hover:text-ink',
-    )
-
-  const items = (
-    <>
-      <ul className="flex flex-col gap-1 lg:flex-row lg:items-center">
-        {LINKS.map((l) => (
-          <li key={l.href}>
-            <Link
-              href={l.href}
-              className={cn(linkClass(l.href), 'block')}
-              aria-current={pathname.startsWith(l.href) ? 'page' : undefined}
-            >
-              {t.nav[l.key]}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="flex flex-col gap-1 border-t pt-2 lg:flex-row lg:items-center lg:border-t-0 lg:border-s lg:pt-0 lg:ps-3">
-        {isAuthed ? (
-          <>
-            <Link
-              href="/tableau-de-bord"
-              className={cn(linkClass('/tableau-de-bord'), 'block')}
-              aria-current={pathname.startsWith('/tableau-de-bord') ? 'page' : undefined}
-            >
-              {t.nav.dashboard}
-            </Link>
-            {signOutSlot}
-          </>
-        ) : (
-          <>
-            <Link href="/auth/connexion" className={cn(linkClass('/auth/connexion'), 'block')}>
-              {t.nav.signIn}
-            </Link>
-            <Link
-              href="/auth/inscription"
-              className="block rounded-full bg-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground shadow-[0_0_14px_rgba(125,211,252,0.35)] hover:opacity-90"
-            >
-              {t.nav.signUp}
-            </Link>
-          </>
-        )}
-      </div>
-    </>
-  )
+  useEffect(() => {
+    if (!open) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open])
 
   return (
-    <nav aria-label={t.a11y.mainNav}>
-      <div className="hidden items-center gap-2 lg:flex">{items}</div>
+    <>
       <button
         type="button"
-        className="flex size-10 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-white/[0.06] hover:text-ink lg:hidden"
+        className="grid size-9 place-items-center rounded-full text-foreground transition-colors hover:bg-muted lg:hidden"
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((o) => !o)}
       >
-        {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
         <span className="sr-only">{open ? t.a11y.closeMenu : t.a11y.openMenu}</span>
       </button>
+
       <div
         id={menuId}
         hidden={!open}
-        className="glass absolute inset-x-0 top-16 border-x-0 border-t-0 p-4 shadow-ice lg:hidden"
+        className="glass absolute inset-x-0 top-16 border-x-0 border-t-0 p-4 shadow-lift lg:hidden"
       >
-        <div className="flex flex-col gap-2">{items}</div>
+        <ul className="flex flex-col gap-1">
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={cn(linkClass(pathname, link.href, 'glow'), 'block')}
+                aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+              >
+                {t.nav[link.key]}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-2 flex flex-col gap-1 border-t border-border/80 pt-2">
+          {isAuthed ? (
+            <>
+              <Link
+                href="/tableau-de-bord"
+                className={cn(linkClass(pathname, '/tableau-de-bord', 'glow'), 'block')}
+                aria-current={pathname.startsWith('/tableau-de-bord') ? 'page' : undefined}
+              >
+                {t.nav.dashboard}
+              </Link>
+              {signOutSlot}
+            </>
+          ) : (
+            <>
+              <Link href="/auth/connexion" className={cn(linkClass(pathname, '/auth/connexion', 'glow'), 'block')}>
+                {t.nav.signIn}
+              </Link>
+              <Link
+                href="/auth/inscription"
+                className="glow mt-1 block rounded-full bg-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground hover:opacity-90"
+              >
+                {t.nav.signUp}
+              </Link>
+            </>
+          )}
+        </div>
+
+        {extras ? (
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/80 pt-3">
+            {extras}
+          </div>
+        ) : null}
       </div>
-    </nav>
+    </>
   )
 }

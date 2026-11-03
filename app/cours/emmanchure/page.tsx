@@ -12,6 +12,9 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import { LessonComplete } from '@/components/lesson-complete'
+import { AtelierFilm } from '@/components/atelier-film'
+import { PageNarration } from '@/components/speech/narration'
+import { SpeechBar } from '@/components/speech/speech-bar'
 import { ArmholeFigure } from '@/components/illustrations/armhole'
 import { getUserContext } from '@/lib/data'
 import { getDictionary } from '@/lib/i18n'
@@ -268,9 +271,18 @@ export default async function EmmanchurePage() {
   const t = getDictionary(locale)
   const p = t.pages.emmanchure
   const lesson = getArmholeLesson(locale)
+  const narration = [
+    lesson.title,
+    lesson.subtitle,
+    lesson.intro,
+    ...lesson.sections.map((section) => section.lead ?? ''),
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-10">
+      <PageNarration title={lesson.title} text={narration} />
       <nav aria-label={t.a11y.breadcrumb}>
         <Link
           href="/cours/mesures"
@@ -284,7 +296,7 @@ export default async function EmmanchurePage() {
       {/* ---------------------------------------------------------------- */}
       {/* Hero : carnet d'atelier                                          */}
       {/* ---------------------------------------------------------------- */}
-      <header className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-atelier-deep via-card to-card text-foreground shadow-[0_24px_60px_-30px_rgba(14,77,110,0.75)]">
+      <header className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-accent via-card to-card text-foreground shadow-lift">
         <div className="paper-grid pointer-events-none absolute inset-0 opacity-[0.14]" aria-hidden="true" />
         <div
           className="pointer-events-none absolute -end-24 -top-24 size-72 rounded-full bg-primary/20 blur-3xl"
@@ -319,7 +331,7 @@ export default async function EmmanchurePage() {
             ].map(({ icon: Icon, value }) => (
               <span
                 key={value}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-secondary-foreground"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/70 px-3 py-1 text-[11px] font-medium text-secondary-foreground"
               >
                 <Icon className="size-3.5 text-primary" aria-hidden="true" />
                 {value}
@@ -327,23 +339,32 @@ export default async function EmmanchurePage() {
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
+          <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5">
             <a
               href="#donnees"
-              className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-[0_0_18px_rgba(125,211,252,0.35)] transition-opacity hover:opacity-90"
+              className="glow inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               {p.start}
               <ArrowRight className="dir-icon size-4" aria-hidden="true" />
             </a>
             <Link
               href="/patrons/abaya"
-              className="inline-flex h-11 items-center gap-2 rounded-lg border border-white/20 px-5 text-sm font-medium text-foreground transition-colors hover:bg-white/10"
+              className="inline-flex h-11 items-center gap-2 rounded-lg border border-border px-5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             >
               {t.patterns.abaya.name}
             </Link>
           </div>
         </div>
       </header>
+
+      <SpeechBar text={narration} />
+
+      <section id="demonstration" aria-labelledby="demo-title" className="scroll-mt-24">
+        <h2 id="demo-title" className="sr-only">
+          {t.film.title}
+        </h2>
+        <AtelierFilm />
+      </section>
 
       <div className="grid items-start gap-10 lg:grid-cols-[248px_minmax(0,1fr)]">
         {/* -------------------------------------------------------------- */}
