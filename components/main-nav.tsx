@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 
 const LINKS = [
   { href: '/cours/mesures', key: 'mesures' },
+  { href: '/tailles', key: 'tailles' },
   { href: '/cours/glossaire', key: 'glossaire' },
   { href: '/cours/emmanchure', key: 'emmanchure' },
   { href: '/patrons', key: 'patrons' },
@@ -17,7 +18,7 @@ const LINKS = [
 
 function linkClass(pathname: string, href: string, active: string) {
   return cn(
-    'rounded-full px-3 py-2 text-sm font-medium transition-colors',
+    'rounded-full px-2 py-2 text-[13px] font-medium transition-colors xl:px-3 xl:text-sm',
     pathname.startsWith(href)
       ? `${active} bg-primary text-primary-foreground shadow-sm`
       : 'text-muted-foreground hover:bg-muted hover:text-foreground',
@@ -93,7 +94,7 @@ export function MobileMenu({
       <div
         id={menuId}
         hidden={!open}
-        className="glass absolute inset-x-0 top-16 border-x-0 border-t-0 p-4 shadow-lift lg:hidden"
+        className="glass absolute inset-x-0 top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto border-x-0 border-t-0 p-4 shadow-lift lg:hidden"
       >
         <ul className="flex flex-col gap-1">
           {LINKS.map((link) => (

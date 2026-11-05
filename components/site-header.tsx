@@ -18,7 +18,7 @@ export async function SiteHeader({ theme }: { theme: Theme }) {
   return (
     <header className="glass-bar sticky top-0 z-40">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-2 px-3 sm:px-6">
-        <Link href="/" aria-label={t.brand} className="flex shrink-0 items-center rounded-lg">
+        <Link href="/" className="flex shrink-0 items-center rounded-lg">
           <BrandMark locale={locale} brand={t.brand} emblemClassName="size-9" />
         </Link>
 

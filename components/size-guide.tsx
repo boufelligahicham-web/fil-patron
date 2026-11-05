@@ -25,16 +25,19 @@ const MORPHO_ICONS = [Accessibility, Hourglass, Circle, MoveVertical]
  * les correspondances internationales, puis les repères de morphologie.
  *
  * `compact` sert au carnet : on garde le sélecteur et les cotes, on renvoie
- * vers la leçon pour la grille complète.
+ * vers la grille complète. `table` affiche la grille entière, ligne par ligne,
+ * sur la page dédiée aux tailles.
  */
 export function SizeGuide({
   id = 'tailles',
   compact = false,
+  table = false,
   defaultSize = 'M',
   className,
 }: {
   id?: string
   compact?: boolean
+  table?: boolean
   defaultSize?: SizeKey
   className?: string
 }) {
@@ -73,14 +76,14 @@ export function SizeGuide({
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h2 id={`${uid}-title`} className={cn('font-semibold', compact ? 'text-sm' : 'text-lg')}>
-                {compact ? s.compactTitle : s.title}
+                {compact ? s.compactTitle : table ? s.fullTitle : s.title}
               </h2>
               <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
                 {s.badge}
               </span>
             </div>
             <p className="mt-1 text-xs leading-5 text-muted-foreground">
-              {compact ? s.compactText : s.intro}
+              {compact ? s.compactText : table ? s.fullText : s.intro}
             </p>
           </div>
         </div>
@@ -158,6 +161,98 @@ export function SizeGuide({
           </div>
         </div>
 
+        {table && (
+          <div className="mt-1 flex flex-col gap-2">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="text-xs font-semibold text-foreground">{s.tableTitle}</h3>
+              <span id={`${uid}-hint`} className="text-[11px] text-muted-foreground">
+                {s.tableHint}
+              </span>
+            </div>
+
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table
+                aria-describedby={`${uid}-hint`}
+                className="w-full min-w-[660px] border-collapse text-xs"
+              >
+                <caption className="sr-only">{s.tableCaption}</caption>
+                <thead className="bg-muted/60 text-[10px] tracking-wide text-muted-foreground uppercase">
+                  <tr>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      {s.tableColumns.size}
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      <abbr title={s.chest} className="no-underline">
+                        {s.chestShort}
+                      </abbr>
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      <abbr title={s.waist} className="no-underline">
+                        {s.waistShort}
+                      </abbr>
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      <abbr title={s.hips} className="no-underline">
+                        {s.hipsShort}
+                      </abbr>
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      {s.tableColumns.intl}
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      {s.tableColumns.cups}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {SIZE_ROWS.map((item) => {
+                    const selected = item.key === active
+                    return (
+                      <tr
+                        key={item.key}
+                        onClick={() => setActive(item.key)}
+                        className={cn(
+                          'cursor-pointer transition-colors',
+                          selected ? 'bg-primary/10' : 'hover:bg-muted/50',
+                        )}
+                      >
+                        <th scope="row" className="px-3 py-2 text-start font-semibold whitespace-nowrap">
+                          <button
+                            type="button"
+                            onClick={() => setActive(item.key)}
+                            aria-pressed={selected}
+                            className={cn(
+                              'rounded-md px-1 py-0.5 text-start transition-colors',
+                              selected ? 'text-primary' : 'text-foreground hover:text-primary',
+                            )}
+                          >
+                            {sizeLabel(locale, item)}
+                          </button>
+                        </th>
+                        <td className="px-3 py-2 tabular-nums whitespace-nowrap">{range(item.tp)}</td>
+                        <td className="px-3 py-2 tabular-nums whitespace-nowrap">{range(item.tt)}</td>
+                        <td className="px-3 py-2 tabular-nums whitespace-nowrap">{range(item.tb)}</td>
+                        <td className="px-3 py-2 whitespace-nowrap text-muted-foreground">
+                          <span>{s.intl.fr} {item.fr}</span>
+                          <span aria-hidden="true"> · </span>
+                          <span>{s.intl.it} {item.it}</span>
+                          <span aria-hidden="true"> · </span>
+                          <span>{s.intl.uk} {item.uk}</span>
+                          <span aria-hidden="true"> · </span>
+                          <span>{s.intl.us} {item.us}</span>
+                        </td>
+                        <td className="px-3 py-2 whitespace-nowrap">{cupLabel(locale, item.cups)}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-[11px] leading-5 text-muted-foreground">{s.tableNote}</p>
+          </div>
+        )}
+
         {!compact && (
           <>
             <div className="mt-1 flex flex-col gap-2">
@@ -196,9 +291,9 @@ export function SizeGuide({
           </>
         )}
 
-        {compact && (
+        {!table && (
           <Link
-            href="/cours/mesures#tailles"
+            href="/tailles#grille"
             className="inline-flex w-fit items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
           >
             {s.openFull}

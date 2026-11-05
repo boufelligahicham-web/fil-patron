@@ -64,6 +64,11 @@ const fr = {
         description:
           'Entrez vos mesures et obtenez instantanément les valeurs de construction de chaque patron.',
       },
+      sizes: {
+        title: 'Guide des tailles FR 34-60',
+        description:
+          'Grille complète des tailles FR 34 à 60 : tours de poitrine, de taille et de bassin, correspondances FR/IT/UK/US, bonnets conseillés et retouches de morphologie.',
+      },
       dashboard: { title: 'Ma progression' },
       login: { title: 'Connexion' },
       signup: { title: 'Inscription' },
@@ -153,6 +158,7 @@ const fr = {
   },
   sizes: {
     badge: 'FR 34-60',
+    eyebrow: 'Outil d’atelier · Mesures',
     title: 'Guide des tailles & morphologie',
     intro:
       'Tableau comparatif international et repères de patronage sur mesure. Choisissez une taille pour lire les tours clés.',
@@ -177,6 +183,35 @@ const fr = {
     compactTitle: 'Ma taille en un clin d’œil',
     compactText: 'Tours clés et correspondances internationales, sans quitter le carnet.',
     tableCaption: 'Guide des tailles FR 34 à 60 : tours de poitrine, de taille et de bassin',
+    tableTitle: 'Toutes les tailles',
+    tableHint: 'Touchez une ligne pour lire le détail de la taille et ses correspondances.',
+    tableNote:
+      'Valeurs du corps en centimètres. Les correspondances internationales sont indicatives : un patronage sur mesure se règle toujours au ruban.',
+    tableColumns: {
+      size: 'Taille',
+      chest: 'Poitrine',
+      waist: 'Taille',
+      hips: 'Bassin',
+      intl: 'Correspondances',
+      cups: 'Bonnets',
+    },
+    howTitle: 'Bien choisir sa taille',
+    how: [
+      {
+        title: 'Mesurer sans serrer',
+        text: 'Ruban horizontal, à même le corps ou sur des sous-vêtements fins. Le mètre doit glisser, jamais marquer la peau.',
+      },
+      {
+        title: 'Partir du tour de poitrine',
+        text: 'C’est lui qui fixe la ligne de taille du patron. Les trois tours se lisent ensuite dans la même ligne du tableau.',
+      },
+      {
+        title: 'Ajouter l’aisance au tracé',
+        text: 'La grille donne le corps, pas le vêtement. Ajoutez 4 à 6 cm au tour de poitrine pour une abaya non extensible.',
+      },
+    ],
+    measuresCta: 'Revoir la prise de mesures',
+    calculatorCta: 'Calculer mon patron',
     morphology: [
       {
         title: 'Silhouette H · droite',
@@ -198,6 +233,7 @@ const fr = {
   },
   nav: {
     mesures: 'Mesures',
+    tailles: 'Tailles',
     glossaire: 'Glossaire',
     emmanchure: 'Leçon',
     patrons: 'Patrons',
@@ -212,6 +248,7 @@ const fr = {
   footer: {
     tagline: 'Fil & Patron — un atelier gratuit pour apprendre à son rythme.',
     mesures: 'Prise de mesures',
+    sizes: 'Guide des tailles',
     emmanchure: 'Leçon d’emmanchure',
     patrons: 'Patrons',
     calculateur: 'Calculateur',
@@ -590,6 +627,11 @@ const ar: Dictionary = {
         title: 'حاسبة المقاسات',
         description: 'أدخلوا مقاساتكم واحصلوا فورًا على قيم بناء كل باترون.',
       },
+      sizes: {
+        title: 'دليل المقاسات من 34 إلى 60',
+        description:
+          'الجدول الكامل للمقاسات من 34 إلى 60: محيطات الصدر والخصر والأرداف، والمقابلات الفرنسية والإيطالية والبريطانية والأمريكية، والكأس المناسب، وتعديلات البنية الجسدية.',
+      },
       dashboard: { title: 'تقدّمي' },
       login: { title: 'تسجيل الدخول' },
       signup: { title: 'إنشاء حساب' },
@@ -679,6 +721,7 @@ const ar: Dictionary = {
   },
   sizes: {
     badge: 'من 34 إلى 60',
+    eyebrow: 'أداة الورشة · المقاسات',
     title: 'دليل المقاسات والبنية الجسدية',
     intro:
       'جدول مقارن دولي وعلامات تفصيل حسب المقاس. اختاروا مقاسًا لعرض المحيطات الأساسية.',
@@ -703,6 +746,35 @@ const ar: Dictionary = {
     compactTitle: 'مقاسي في لمحة',
     compactText: 'المحيطات الأساسية والمقابلات الدولية دون مغادرة الدفتر.',
     tableCaption: 'جدول المقاسات من 34 إلى 60 مع محيطات الصدر والخصر والأرداف',
+    tableTitle: 'كل المقاسات',
+    tableHint: 'المسوا صفًّا لعرض تفصيل المقاس ومقابلاته.',
+    tableNote:
+      'القيم لمحيطات الجسم بالسنتيمتر. المقابلات الدولية إرشادية: الباترون حسب المقاس يُضبط دائمًا بشريط القياس.',
+    tableColumns: {
+      size: 'المقاس',
+      chest: 'الصدر',
+      waist: 'الخصر',
+      hips: 'الأرداف',
+      intl: 'المقابلات',
+      cups: 'الكأس',
+    },
+    howTitle: 'كيف تختارون مقاسكم',
+    how: [
+      {
+        title: 'قيسوا دون شدّ',
+        text: 'الشريط أفقي، على الجسم مباشرة أو فوق ملابس داخلية رقيقة. يجب أن ينزلق الشريط دون أن يترك أثرًا على الجلد.',
+      },
+      {
+        title: 'ابدأوا بمحيط الصدر',
+        text: 'هو الذي يحدّد خط الخصر في الباترون. ثم تُقرأ المحيطات الثلاثة في الصف نفسه من الجدول.',
+      },
+      {
+        title: 'أضيفوا الارتياح إلى الرسم',
+        text: 'الجدول يعطي مقاسات الجسم لا الثوب. أضيفوا من 4 إلى 6 سم لمحيط الصدر في العباية غير المطّاطية.',
+      },
+    ],
+    measuresCta: 'مراجعة أخذ المقاسات',
+    calculatorCta: 'احسبوا باتروني',
     morphology: [
       {
         title: 'قوام مستقيم',
@@ -724,6 +796,7 @@ const ar: Dictionary = {
   },
   nav: {
     mesures: 'المقاسات',
+    tailles: 'دليل المقاسات',
     glossaire: 'المصطلحات',
     emmanchure: 'الدرس',
     patrons: 'الباترونات',
@@ -738,6 +811,7 @@ const ar: Dictionary = {
   footer: {
     tagline: 'فيل وباترون — ورشة مجانية للتعلّم على وتيرتكم.',
     mesures: 'أخذ المقاسات',
+    sizes: 'دليل المقاسات',
     emmanchure: 'درس حردة الكمّ',
     patrons: 'الباترونات',
     calculateur: 'الحاسبة',

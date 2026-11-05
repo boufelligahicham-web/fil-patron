@@ -131,7 +131,7 @@ export default async function HomePage() {
       {/* Deux outils de terrain -------------------------------------- */}
       <section aria-label={t.sizes.title} className="grid gap-4 sm:grid-cols-2">
         <Link
-          href="/cours/mesures#tailles"
+          href="/tailles"
           className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition-colors hover:border-primary/50"
         >
           <span className="grid size-10 place-items-center rounded-lg border border-primary/20 bg-primary/10 text-primary">

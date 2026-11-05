@@ -9,6 +9,7 @@ export async function SiteFooter() {
 
   const links = [
     { href: '/cours/mesures', label: t.footer.mesures },
+    { href: '/tailles', label: t.footer.sizes },
     { href: '/cours/glossaire', label: t.nav.glossaire },
     { href: '/cours/emmanchure', label: t.footer.emmanchure, featured: true },
     { href: '/patrons', label: t.footer.patrons },
